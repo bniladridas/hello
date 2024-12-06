@@ -6,7 +6,7 @@ Author: @bniladridas
 A modern, real-time blog platform leveraging React, Firebase, and Vercel Edge Network for optimal performance and scalability.
 
 ## ⚡ Quick Links
-- [Live Demo](https://gravity-blog.vercel.app)
+- [Live Demo](https://gravity-blog-xi.vercel.app)
 - [Documentation](./docs)
 - [Contributing Guide](CONTRIBUTING.md)
 - [Deployment Guide](DEPLOYMENT.md)

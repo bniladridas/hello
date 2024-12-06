@@ -1,15 +1,63 @@
-// src/App.js
-// Last updated: 2024-12-06 16:23:25 UTC
-// Author: @bniladridas
-
+// App.js
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase/config';
 import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, limit, query } from 'firebase/firestore';
-import { Pencil, Save, Trash, FileText, Eye, Menu } from 'lucide-react';
+import { Pencil, Save, Trash, FileText, Eye, Menu, X } from 'lucide-react';
 import ToggleSwitch from './ToggleSwitch';
 import TermsOfService from './TermsOfService';
 import PrivacyPolicy from './PrivacyPolicy';
 import PropTypes from 'prop-types';
+
+const MobileMenu = ({ isOpen, onClose, onNavigate }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 md:hidden">
+      <div className="fixed inset-0 bg-black bg-opacity-50" onClick={onClose}></div>
+      <div className="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-800 shadow-lg transform transition-transform duration-300 ease-in-out">
+        <div className="p-4">
+          <button 
+            onClick={onClose}
+            className="absolute top-4 right-4 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+            aria-label="Close menu"
+          >
+            <X size={24} />
+          </button>
+          <nav className="mt-8">
+            <div className="flex flex-col space-y-4">
+              <button 
+                onClick={() => onNavigate('home')}
+                className="text-left px-4 py-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => onNavigate('terms')}
+                className="text-left px-4 py-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+              >
+                Terms of Service
+              </button>
+              <button 
+                onClick={() => onNavigate('privacy')}
+                className="text-left px-4 py-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+              >
+                Privacy Policy
+              </button>
+              <a 
+                href="https://x.com/bniladridas"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2 text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
+              >
+                Follow on X
+              </a>
+            </div>
+          </nav>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Post = ({ post, onEdit, onDelete, onPreview }) => {
   return (
@@ -47,25 +95,23 @@ const Post = ({ post, onEdit, onDelete, onPreview }) => {
 
 const PostPreviewModal = ({ post, onClose }) => {
   useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (event.target.classList.contains('modal-backdrop')) {
-        onClose();
-      }
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') onClose();
     };
-
-    window.addEventListener('click', handleOutsideClick);
-    return () => window.removeEventListener('click', handleOutsideClick);
+    
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center modal-backdrop z-50">
-      <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-3xl relative max-h-screen overflow-y-auto">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-3xl relative max-h-[90vh] overflow-y-auto m-4">
         <button 
           onClick={onClose} 
-          className="absolute top-2 right-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+          className="absolute top-4 right-4 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
           aria-label="Close Preview"
         >
-          &times;
+          <X size={24} />
         </button>
         <h2 className="text-2xl font-light mb-4 dark:text-white">{post.title}</h2>
         <p className="text-gray-700 dark:text-gray-300">{post.content}</p>
@@ -89,8 +135,8 @@ const BlogList = ({ posts, onEdit, onDelete, onPreview }) => {
 };
 
 const PostForm = ({ currentPost, onSave, onCancel }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState(currentPost?.title || '');
+  const [content, setContent] = useState(currentPost?.content || '');
 
   useEffect(() => {
     if (currentPost) {
@@ -113,7 +159,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Post Title"
-        className="w-full text-2xl font-light mb-4 border-b pb-2 focus:outline-none dark:bg-gray-800 dark:text-white dark:border-gray-700"
+        className="w-full text-2xl font-light mb-4 border-b pb-2 focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-700"
         required
         aria-label="Post Title"
       />
@@ -121,14 +167,14 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Post Content"
-        className="w-full min-h-[300px] resize-none text-lg font-light focus:outline-none dark:bg-gray-800 dark:text-white"
+        className="w-full min-h-[200px] resize-none text-lg font-light focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:text-white"
         required
         aria-label="Post Content"
       />
-      <div className="flex justify-end mt-4">
+      <div className="flex justify-end mt-4 space-x-2">
         <button 
           type="submit" 
-          className="flex items-center bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 mr-2"
+          className="flex items-center bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100"
           aria-label="Save Post"
         >
           <Save className="mr-2" size={20} />
@@ -160,6 +206,31 @@ const App = () => {
     return localStorage.getItem('darkMode') === 'true';
   });
 
+  // Handle body scroll lock when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  // Close menu on window resize
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Fetch posts from Firebase
   useEffect(() => {
     const q = query(collection(db, 'posts'), limit(40));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
@@ -173,11 +244,13 @@ const App = () => {
     }, (error) => {
       setError('Failed to fetch posts.');
       setLoading(false);
+      console.error("Error fetching posts: ", error);
     });
 
     return () => unsubscribe();
   }, []);
 
+  // Handle dark mode
   useEffect(() => {
     if (isDarkMode) {
       document.documentElement.classList.add('dark');
@@ -191,6 +264,11 @@ const App = () => {
     setIsDarkMode(!isDarkMode);
   };
 
+  const handleNavigate = (page) => {
+    setCurrentPage(page);
+    setIsMenuOpen(false);
+  };
+
   const handleSavePost = async (post) => {
     if (post.title.trim() === '' || post.content.trim() === '') {
       setError('Title and content are required.');
@@ -199,47 +277,47 @@ const App = () => {
 
     try {
       if (editingId) {
-        setPosts(posts.map(p => (p.id === editingId ? { ...p, ...post } : p)));
         const postRef = doc(db, 'posts', editingId);
         await updateDoc(postRef, {
           title: post.title,
-          content: post.content
+          content: post.content,
+          updatedAt: new Date()
         });
       } else {
-        setPosts([{ id: Date.now().toString(), ...post, createdAt: new Date() }, ...posts]);
         await addDoc(collection(db, 'posts'), {
           title: post.title,
           content: post.content,
-          createdAt: new Date()
+          createdAt: new Date(),
+          updatedAt: new Date()
         });
       }
       setError('');
       setCurrentPost(null);
       setEditingId(null);
     } catch (error) {
-      setPosts(posts.filter(p => p.id !== editingId));
       setError('Failed to save post.');
       console.error("Error saving post: ", error);
     }
   };
 
   const handleDeletePost = async (id) => {
-    try {
-      setPosts(posts.filter(post => post.id !== id));
-      await deleteDoc(doc(db, 'posts', id));
-      setError('');
-    } catch (error) {
-      setPosts(posts);
-      setError('Failed to delete post.');
-      console.error("Error deleting post: ", error);
+    if (window.confirm('Are you sure you want to delete this post?')) {
+      try {
+        await deleteDoc(doc(db, 'posts', id));
+        setError('');
+      } catch (error) {
+        setError('Failed to delete post.');
+        console.error("Error deleting post: ", error);
+      }
     }
   };
 
   const handleEditPost = (id) => {
     const post = posts.find(post => post.id === id);
     if (post) {
-      setCurrentPost({ title: post.title, content: post.content });
+      setCurrentPost(post);
       setEditingId(id);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -257,53 +335,60 @@ const App = () => {
     setPreviewPost(null);
   };
 
-  const handleNavigate = (page) => {
-    setCurrentPage(page);
-    setIsMenuOpen(false);
-  };
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-200">
-      <div className="max-w-4xl mx-auto p-6 font-sans">
-        <header className="mb-8 border-b border-gray-200 dark:border-gray-700 pb-4 flex justify-between items-center">
-          <h1 className="text-3xl font-light text-gray-800 dark:text-white">Gravity Blog</h1>
-          <div className="flex items-center space-x-4">
-            <ToggleSwitch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
-            <button 
-              onClick={toggleMenu} 
-              className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white md:hidden"
-              aria-label="Toggle Menu"
-            >
-              <Menu size={24} />
-            </button>
+      <div className="max-w-4xl mx-auto p-4 md:p-6 font-sans">
+        <header className="mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl md:text-3xl font-light text-gray-800 dark:text-white">
+              Gravity Blog
+            </h1>
+            <div className="flex items-center space-x-4">
+              <ToggleSwitch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
+              <button 
+                onClick={toggleMenu}
+                className="md:hidden p-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+                aria-label="Toggle Menu"
+                aria-expanded={isMenuOpen}
+              >
+                <Menu size={24} />
+              </button>
+            </div>
           </div>
-          <nav className={`md:flex md:flex-row space-y-2 md:space-y-0 md:space-x-4 ${isMenuOpen ? 'block' : 'hidden md:block'}`}>
+
+          <nav className="hidden md:flex mt-4 space-x-6">
             <button 
-              onClick={() => handleNavigate('home')} 
-              className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+              onClick={() => handleNavigate('home')}
+              className={`text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white ${
+                currentPage === 'home' ? 'font-medium' : ''
+              }`}
             >
               Home
             </button>
             <button 
-              onClick={() => handleNavigate('terms')} 
-              className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+              onClick={() => handleNavigate('terms')}
+              className={`text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white ${
+                currentPage === 'terms' ? 'font-medium' : ''
+              }`}
             >
               Terms of Service
             </button>
             <button 
-              onClick={() => handleNavigate('privacy')} 
-              className="text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
+              onClick={() => handleNavigate('privacy')}
+              className={`text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white ${
+                currentPage === 'privacy' ? 'font-medium' : ''
+              }`}
             >
               Privacy Policy
             </button>
             <a 
-              href="https://x.com/bniladridas" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+              href="https://x.com/bniladridas"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
             >
               Follow on X
@@ -311,38 +396,43 @@ const App = () => {
           </nav>
         </header>
 
+        <MobileMenu 
+          isOpen={isMenuOpen} 
+          onClose={() => setIsMenuOpen(false)}
+          onNavigate={handleNavigate}
+        />
+
+        {error && (
+          <div className="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-100 rounded-lg">
+            {error}
+          </div>
+        )}
+
         {currentPage === 'home' && (
           <>
             {loading ? (
-              <div className="flex items-center justify-center">
+              <div className="flex items-center justify-center py-12">
                 <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
               </div>
-            ) : error ? (
-              <p className="text-red-500 dark:text-red-400">{error}</p>
             ) : (
-              <div>
-                <div className="mb-8">               
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Writing Area */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="md:sticky md:top-4 self-start">
                   <PostForm 
                     currentPost={currentPost} 
                     onSave={handleSavePost} 
                     onCancel={handleCancel} 
                   />
-
-                  {/* Posts List */}
-                  <div>
-                    <h2 className="text-xl font-light mb-4 flex items-center text-gray-800 dark:text-white">
-                      <FileText className="mr-2" /> Posts
-                    </h2>
-                    <BlogList 
-                      posts={posts} 
-                      onEdit={handleEditPost} 
-                      onDelete={handleDeletePost} 
-                      onPreview={handlePreviewPost} 
-                    />
-                  </div>
+                </div>
+                <div>
+                  <h2 className="text-xl font-light mb-4 flex items-center text-gray-800 dark:text-white">
+                    <FileText className="mr-2" /> Posts
+                  </h2>
+                  <BlogList 
+                    posts={posts} 
+                    onEdit={handleEditPost} 
+                    onDelete={handleDeletePost} 
+                    onPreview={handlePreviewPost} 
+                  />
                 </div>
               </div>
             )}
@@ -352,15 +442,20 @@ const App = () => {
         {currentPage === 'terms' && <TermsOfService />}
         {currentPage === 'privacy' && <PrivacyPolicy />}
 
-        {previewPost && <PostPreviewModal post={previewPost} onClose={handleClosePreview} />}
+        {previewPost && (
+          <PostPreviewModal 
+            post={previewPost} 
+            onClose={handleClosePreview} 
+          />
+        )}
 
         <footer className="mt-12 text-center text-gray-500 dark:text-gray-400">
           <p>&copy; {new Date().getFullYear()} Gravity Blog</p>
           <p>
             <a 
-              href="https://www.linkedin.com/in/bniladridas/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
+              href="https://www.linkedin.com/in/bniladridas/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
             >
               Connect with CEO on LinkedIn
@@ -373,6 +468,12 @@ const App = () => {
 };
 
 // PropTypes definitions
+MobileMenu.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onNavigate: PropTypes.func.isRequired,
+};
+
 Post.propTypes = {
   post: PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -386,7 +487,6 @@ Post.propTypes = {
 
 PostPreviewModal.propTypes = {
   post: PropTypes.shape({
-    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
   }).isRequired,

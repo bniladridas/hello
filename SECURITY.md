@@ -9,7 +9,7 @@
 ## Reporting a Vulnerability
 
 1. **Do Not** open public issues for security vulnerabilities
-2. Email security concerns to: [security@yourdomain.com]
+2. Email security concerns to: [ndas1262000@gmail.com]
 3. Include detailed description of the vulnerability
 4. We'll respond within 48 hours
 5. Security issues get highest priority

@@ -1,13 +1,154 @@
+/* src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* src/App.css */
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
+    font-family: 'Inter', sans-serif;
+    background-color: #f9fafb;
+    color: #1f2937;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    padding: 1rem;
+    position: relative;
+  }
+  
+  header h1 {
+    font-size: 1.75rem;
+  }
+  
+  header nav {
+    flex-wrap: wrap;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 70%;
+    height: 100%;
+    background-color: white;
+    padding: 2rem;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  header nav.menu-open {
+    right: 0;
+  }
+  
+  header nav button,
+  header nav a {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+    text-align: left;
+    color: #1f2937;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  header nav a {
+    text-decoration: none;
+  }
+  
+  .grid-cols-1 {
+    grid-template-columns: 1fr;
+  }
+  
+  @media (min-width: 768px) {
+    .grid-cols-1 {
+      grid-template-columns: 1fr 1fr;
+    }
+  
+    header nav {
+      position: static;
+      flex-direction: row;
+      align-items: center;
+      background-color: transparent;
+      padding: 0;
+      box-shadow: none;
+    }
+  
+    header nav button,
+    header nav a {
+      margin-bottom: 0;
+      width: auto;
+    }
+  
+    header nav a {
+      color: #1f2937;
+    }
+  
+    .menu-icon {
+      display: none;
+    }
+  }
+  
+  .post {
+    margin-bottom: 1rem;
+  }
+  
+  .post h3 {
+    font-size: 1.25rem;
+  }
+  
+  .post p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .post-form input,
+  .post-form textarea {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    width: 100%;
+  }
+  
+  .post-form button {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+  }
+  
+  .post-form button:hover {
+    opacity: 0.8;
+  }
+  
+  .modal-backdrop {
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    max-width: 90%;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .modal-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .modal-content p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  
+  .menu-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    cursor: pointer;
+  }

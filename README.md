@@ -1,31 +1,178 @@
-# Create React App
+# Gravity Blog
 
-This directory is a brief example of a [Create React App](https://github.com/facebook/create-react-app) site that can be deployed to Vercel with zero configuration.
+Current Date and Time (UTC): 2024-12-06 15:58:52  
+Author: @bniladridas
 
-## Deploy Your Own
+A modern, real-time blog platform leveraging React, Firebase, and Vercel Edge Network for optimal performance and scalability.
 
-Deploy your own Create React App project with Vercel.
+## ⚡ Quick Links
+- [Live Demo](https://gravity-blog.vercel.app)
+- [Documentation](./docs)
+- [Contributing Guide](CONTRIBUTING.md)
+- [Deployment Guide](DEPLOYMENT.md)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/vercel/tree/main/examples/create-react-app&template=create-react-app)
+## 🌟 Key Features
+- Real-time post updates via Firebase
+- Edge-optimized content delivery
+- Dark/Light mode support
+- Responsive design
+- Post preview functionality
+- Global CDN integration
 
-_Live Example: https://create-react-template.vercel.app/_
+## 🏗️ System Architecture
 
-## Available Scripts
+### High-Level Architecture Diagram
+```
+┌─────────────────────────────────────────────────┐
+│                   Client Layer                  │
+│  ┌─────────────────┐      ┌─────────────────┐  │
+│  │    React App    │      │   Static Assets  │  │
+│  │  (CSR/Vercel)   │      │    (CDN/Edge)   │  │
+│  └────────┬────────┘      └────────┬────────┘  │
+└──────────┬─────────────────────────┬───────────┘
+           │                         │
+           ▼                         ▼
+┌─────────────────────────────────────────────────┐
+│               Vercel Edge Network               │
+│  ┌─────────────────┐      ┌─────────────────┐  │
+│  │   Edge Caching  │      │   Global CDN    │  │
+│  └────────┬────────┘      └────────┬────────┘  │
+└──────────┬─────────────────────────┬───────────┘
+           │                         │
+           ▼                         ▼
+┌─────────────────────────────────────────────────┐
+│              Firebase Services                  │
+│  ┌─────────────────┐      ┌─────────────────┐  │
+│  │    Firestore    │      │  Firebase Auth  │  │
+│  │    Database     │      │   (Optional)    │  │
+│  └─────────────────┘      └─────────────────┘  │
+└─────────────────────────────────────────────────┘
+```
 
-In the project directory, you can run:
+### Component Architecture
+```
+┌─────────────────────────────────────────────────┐
+│                    App.js                       │
+│                                                 │
+│  ┌──────────┐ ┌──────────┐ ┌───────────────┐  │
+│  │ PostForm │ │ BlogList │ │ PreviewModal  │  │
+│  └────┬─────┘ └────┬─────┘ └───────┬───────┘  │
+│       │           │              │          │  │
+│       ▼           ▼              ▼          │  │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐    │  │
+│  │  Post    │ │ Footer   │ │ Toggle   │    │  │
+│  │Component │ │Component │ │ Switch   │    │  │
+│  └──────────┘ └──────────┘ └──────────┘    │  │
+└─────────────────────────────────────────────────┘
+```
 
-### `npm start`
+### Data Flow Architecture
+```
+┌──────────────┐     ┌───────────────┐     ┌──────────────┐
+│ User Action  │────▶│ React State   │────▶│   Firebase   │
+│              │     │ Management    │     │  Firestore   │
+└──────────────┘     └───────────────┘     └──────────┬───┘
+       ▲                                              │
+       │                                              │
+       └──────────────────────────────────────────────┘
+            Real-time Updates via onSnapshot
+```
 
-Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Tech Stack
+- **Frontend:** React, TailwindCSS
+- **Database:** Firebase Firestore
+- **Deployment:** Vercel Edge Network
+- **State Management:** React Hooks
+- **Real-time Updates:** Firebase SDK
+- **UI Components:** Lucide React
 
-The page will reload when you make changes. You may also see any lint errors in the console.
+## 🚀 Getting Started
 
-### `npm test`
+### Prerequisites
+- Node.js (v16+)
+- npm or yarn
+- Firebase account
+- Vercel account
 
-Launches the test runner in the interactive watch mode. See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation
+```bash
+# Clone repository
+git clone https://github.com/bniladridas/gravity-blog.git
 
-### `npm run build`
+# Install dependencies
+cd gravity-blog
+npm install
 
-Builds the app for production to the `build` folder.
+# Set up environment variables
+cp .env.example .env.local
 
-It correctly bundles React in production mode and optimizes the build for the best performance. The build is minified and the filenames include the hashes.
+# Start development server
+npm start
+```
+
+### Environment Variables
+```env
+REACT_APP_FIREBASE_API_KEY=your_api_key
+REACT_APP_FIREBASE_AUTH_DOMAIN=your_domain
+REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+REACT_APP_FIREBASE_STORAGE_BUCKET=your_bucket
+REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+REACT_APP_FIREBASE_APP_ID=your_app_id
+```
+
+## 📦 Deployment
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy to production
+vercel --prod
+```
+
+## 🔧 Technical Details
+
+### Performance Optimizations
+- Query limits (40 posts per fetch)
+- Edge caching for static content
+- Lazy loading for modals
+- Optimistic UI updates
+- Real-time data synchronization
+
+### Security Features
+- Firebase security rules
+- Input validation
+- XSS protection
+- CORS policies
+
+### Scalability
+- Distributed CDN
+- Edge computing capabilities
+- Database sharding support
+- Horizontal scaling
+
+## 🤝 Contributing
+See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+
+## 📜 License
+MIT License - see [LICENSE](LICENSE) for details.
+
+## 📚 Documentation
+- [Deployment Guide](DEPLOYMENT.md)
+- [Security Policy](SECURITY.md)
+- [API Documentation](API.md)
+- [Changelog](CHANGELOG.md)
+
+## 👤 Author
+**Bniladridas**
+- LinkedIn: [bniladridas](https://www.linkedin.com/in/bniladridas/)
+- Twitter: [@bniladridas](https://x.com/bniladridas)
+
+## 🙏 Acknowledgments
+- React Team
+- Firebase Team
+- Vercel Team
+- TailwindCSS Team
+- Lucide React Team
+
+---
+Last updated: 2024-12-06 15:58:52 UTC

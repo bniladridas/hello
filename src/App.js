@@ -451,16 +451,6 @@ const App = () => {
 
         <footer className="mt-12 text-center text-gray-500 dark:text-gray-400">
           <p>&copy; {new Date().getFullYear()} Gravity Blog</p>
-          <p>
-            <a 
-              href="https://www.linkedin.com/in/bniladridas/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              Connect with CEO on LinkedIn
-            </a>
-          </p>
         </footer>
       </div>
     </div>

@@ -14,7 +14,7 @@ const TermsOfService = () => {
       </p>
       <h2 className="text-2xl font-light mb-4">2. Privacy</h2>
       <p className="text-gray-700 mb-4">
-        Your privacy is important to us. We have a <a href="/privacy-policy" className="text-blue-500">Privacy Policy</a> that explains how we collect, use, and protect your information.
+        Your privacy is important to us. We have a Privacy Policy that explains how we collect, use, and protect your information.
       </p>
       <h2 className="text-2xl font-light mb-4">3. Intellectual Property</h2>
       <p className="text-gray-700 mb-4">

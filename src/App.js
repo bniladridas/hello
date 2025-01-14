@@ -345,7 +345,7 @@ const App = () => {
         <header className="mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl md:text-3xl font-light text-gray-800 dark:text-white">
-              Gravity Blog
+              gravity's sur-face!
             </h1>
             <div className="flex items-center space-x-4">
               <ToggleSwitch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />

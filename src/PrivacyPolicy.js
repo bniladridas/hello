@@ -6,7 +6,7 @@ const PrivacyPolicy = () => {
     <div className="max-w-4xl mx-auto p-6 font-sans">
       <h1 className="text-3xl font-light text-gray-800 mb-8">Privacy Policy</h1>
       <p className="text-gray-700 mb-4">
-        At Gravity Blog, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use our platform.
+        At gravity's sur-face!, we are committed to protecting your privacy. This Privacy Policy explains how we collect, use, and protect your personal information when you use our platform.
       </p>
       <h2 className="text-2xl font-light mb-4">1. Information We Collect</h2>
       <p className="text-gray-700 mb-4">

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase/config';
 import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, limit, query } from 'firebase/firestore';
-import { Pencil, Save, Trash, Eye, Globe, X, FileText } from 'lucide-react';
+import { Pencil, Trash, Eye, X } from 'lucide-react';
 
 import PropTypes from 'prop-types';
 
@@ -168,10 +168,37 @@ const App = () => {
   const [previewPost, setPreviewPost] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // Fetch posts from Firebase
+  useEffect(() => {
+    const q = query(collection(db, 'posts'), limit(40));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const fetchedPosts = querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data()
+      }));
+      setPosts(fetchedPosts);
+      setLoading(false);
+      setError('');
+    }, (error) => {
+      setError('Failed to fetch posts.');
+      setLoading(false);
+    });
+
     return () => unsubscribe();
   }, []);
 
+  // Handle dark mode
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [isDarkMode]);
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+  };
 
   const handleSavePost = async (post) => {
     if (post.title.trim() === '' || post.content.trim() === '') {

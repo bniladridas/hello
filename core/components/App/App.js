@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Routes, Route } from 'react-router-dom'
+import { Link, Routes, Route } from 'react-router-dom'
 import { db } from '../../firebase/config'
 import {
   collection,
@@ -15,6 +15,7 @@ import {
 import { Pencil, Trash, Eye, X, Menu, Home, FileText, Shield } from 'lucide-react'
 
 import PropTypes from 'prop-types'
+import BlogPage from './BlogPage'
 import PrivacyPolicy from '../../pages/PrivacyPolicy'
 import TermsOfService from '../../pages/TermsOfService'
 
@@ -185,7 +186,6 @@ const PostPreviewModal = ({ post, onClose }) => {
 
 // Main App Component
 const App = () => {
-  const navigate = useNavigate()
   const [posts, setPosts] = useState([])
   const [currentPost, setCurrentPost] = useState(null)
   const [editingId, setEditingId] = useState(null)
@@ -355,19 +355,15 @@ const App = () => {
               <Route
                 path="/"
                 element={
-                  <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-                    <div className='lg:col-span-1'>
-                      <PostForm currentPost={currentPost} onSave={handleSavePost} onCancel={handleCancel} />
-                    </div>
-                    <div className='lg:col-span-2'>
-                      <BlogList
-                        posts={posts}
-                        onEdit={handleEditPost}
-                        onDelete={handleDeletePost}
-                        onPreview={handlePreviewPost}
-                      />
-                    </div>
-                  </div>
+                  <BlogPage
+                    posts={posts}
+                    currentPost={currentPost}
+                    onSave={handleSavePost}
+                    onCancel={handleCancel}
+                    onEdit={handleEditPost}
+                    onDelete={handleDeletePost}
+                    onPreview={handlePreviewPost}
+                  />
                 }
               />
               <Route path="/privacy" element={<PrivacyPolicy />} />
@@ -395,46 +391,40 @@ const App = () => {
               >
                 <X size={20} />
               </button>
-              <nav>
-                <ul className='space-y-2'>
+               <nav>
+                 <ul className='space-y-2'>
                    <li>
-                     <button
-                       onClick={() => {
-                         setIsDrawerOpen(false)
-                         navigate('/')
-                       }}
+                     <Link
+                       to="/"
+                       onClick={() => setIsDrawerOpen(false)}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <Home size={18} className='mr-3' />
                        Home
-                     </button>
+                     </Link>
                    </li>
                    <li>
-                     <button
-                       onClick={() => {
-                         setIsDrawerOpen(false)
-                         navigate('/privacy')
-                       }}
+                     <Link
+                       to="/privacy"
+                       onClick={() => setIsDrawerOpen(false)}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <Shield size={18} className='mr-3' />
                        Privacy Policy
-                     </button>
+                     </Link>
                    </li>
                    <li>
-                     <button
-                       onClick={() => {
-                         setIsDrawerOpen(false)
-                         navigate('/terms')
-                       }}
+                     <Link
+                       to="/terms"
+                       onClick={() => setIsDrawerOpen(false)}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <FileText size={18} className='mr-3' />
                        Terms of Service
-                     </button>
+                     </Link>
                    </li>
-                </ul>
-              </nav>
+                 </ul>
+               </nav>
             </div>
           </div>
         </>

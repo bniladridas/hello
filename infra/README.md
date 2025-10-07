@@ -13,6 +13,12 @@ To run the app locally with Firebase emulator using Docker:
    docker-compose -f infra/docker-compose.yml up --build
    ```
 
+   Or build and run manually:
+   ```bash
+   docker build -f infra/Dockerfile -t hello:latest .
+   docker run --rm hello:latest npm start
+   ```
+
 3. Access the app at http://localhost:3000
 
 4. Access Firebase Emulator UI at http://localhost:4000

@@ -19,5 +19,11 @@ jobs:
         cache: 'npm'
     - name: Install dependencies
       run: npm ci
+    - name: Build app
+      run: npm run build
+    - name: Install serve
+      run: npm install -g serve
     - name: Run E2E tests
-      run: echo "No E2E tests configured yet. Add Cypress or Playwright for end-to-end testing."
+      run: |
+        serve -s build &
+        npx cypress run

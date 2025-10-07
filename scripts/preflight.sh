@@ -23,11 +23,14 @@ fi
 
 # Run linting (includes formatting checks)
 echo "Running ESLint..."
+npm run lint
 
 # Run tests with coverage
 echo "Running tests with coverage..."
+npm run test:coverage
 
 # Build the project
 echo "Building the project..."
+npm run build
 
 echo "All preflight checks passed! Ready to commit or deploy."

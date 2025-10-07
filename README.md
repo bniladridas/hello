@@ -24,6 +24,8 @@ A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 
 ## Current State & Maintenance
 
+The project now includes comprehensive unit tests (42.76% coverage), E2E tests with Cypress, and CI/CD pipelines for automated testing and building.
+
 ### Known Issues
 - **NPM Vulnerabilities**: 9 vulnerabilities (3 moderate, 6 high) related to dependencies like nth-check, postcss, webpack-dev-server. These are in dev dependencies and don't affect production builds. Avoid `npm audit fix --force` as it downgrades react-scripts to 0.0.0, breaking the app.
 - **Deprecated Dependencies**: Some Babel plugins are deprecated but functional. Update when possible.
@@ -139,6 +141,8 @@ Your app will be live at your Firebase hosting URL
 - `npm run lint:fix`: Auto-fix linting issues
 - `npm run preflight`: Run basic checks (lint, tests, build)
 - `npm run all`: Run all checks and builds
+- `npm run cypress:open`: Open Cypress E2E test runner
+- `npm run cypress:run`: Run Cypress E2E tests headlessly
 - `npm run eject`: Eject from Create React App
 
 Custom scripts in `scripts/`:

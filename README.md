@@ -14,20 +14,6 @@ A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 - Post creation, editing, deletion, and preview
 - Clean, minimal UI
 
-## Quick Start
-
-```bash
-# Clone the repository
-git clone <repository-url>
-cd hello
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
-
 ## Technology Stack & Rationale
 
 - **React 18**: Chosen for its component-based architecture, enabling reusable UI components and efficient rendering with hooks. Provides a modern, declarative way to build interactive UIs.

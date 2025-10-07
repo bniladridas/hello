@@ -14,6 +14,45 @@ A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 - Post creation, editing, deletion, and preview
 - Clean, minimal UI
 
+## Code Examples
+
+### Creating a Post
+
+```javascript
+import { addDoc, collection } from 'firebase/firestore'
+import { db } from './firebase/config'
+
+const createPost = async (title, content) => {
+  await addDoc(collection(db, 'posts'), {
+    title,
+    content,
+    createdAt: new Date(),
+    updatedAt: new Date()
+  })
+}
+```
+
+### Using the Post Component
+
+```jsx
+import Post from './components/Post/Post'
+
+const BlogList = ({ posts, onEdit, onDelete }) => {
+  return (
+    <div>
+      {posts.map(post => (
+        <Post
+          key={post.id}
+          post={post}
+          onEdit={onEdit}
+          onDelete={onDelete}
+        />
+      ))}
+    </div>
+  )
+}
+```
+
 ## Technology Stack & Rationale
 
 - **React 18**: Chosen for its component-based architecture, enabling reusable UI components and efficient rendering with hooks. Provides a modern, declarative way to build interactive UIs.

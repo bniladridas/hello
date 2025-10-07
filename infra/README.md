@@ -24,6 +24,15 @@ This sets up:
 
 Data is persisted in `./data` folder.
 
+## CI/CD with Docker
+
+The project includes a GitHub Actions workflow (`docker-ci.yml`) that:
+- Builds the Docker image
+- Runs tests, linting, and build inside the container
+- Ensures the Docker setup is working correctly
+
+Triggered on pushes and PRs to `main` branch.
+
 ## Deployment
 
 For production deployment, use Firebase Hosting as described in the main README.

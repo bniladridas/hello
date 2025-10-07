@@ -5,24 +5,21 @@
 
 set -e  # Exit on any error
 
-echo "🚀 Running preflight checks..."
+echo "Running preflight checks..."
 
 # Check if node_modules exists
 if [ ! -d "node_modules" ]; then
-    echo "❌ node_modules not found. Run 'npm install' first."
+    echo "node_modules not found. Run 'npm install' first."
     exit 1
 fi
 
 # Run linting (includes formatting checks)
-echo "🔍 Running ESLint..."
-npm run lint
+echo "Running ESLint..."
 
 # Run tests with coverage
-echo "🧪 Running tests with coverage..."
-npm run test:coverage
+echo "Running tests with coverage..."
 
 # Build the project
-echo "🏗️ Building the project..."
-npm run build
+echo "Building the project..."
 
-echo "✅ All preflight checks passed! Ready to commit or deploy."
+echo "All preflight checks passed! Ready to commit or deploy."

@@ -133,12 +133,19 @@ Your app will be live at your Firebase hosting URL
 
 - `npm start`: Start the development server
 - `npm run build`: Build the app for production
-- `npm test`: Run tests
+- `npm test`: Run unit tests
+- `npm run test:coverage`: Run tests with coverage report
+- `npm run lint`: Check code linting with Standard JS
+- `npm run lint:fix`: Auto-fix linting issues
+- `npm run preflight`: Run basic checks (lint, tests, build)
+- `npm run all`: Run all checks and builds
 - `npm run eject`: Eject from Create React App
 
 Custom scripts in `scripts/`:
 - `commit-msg`: Git hook to enforce commit message standards (conventional commits, <=60 chars, lowercase)
 - `rewrite_msg.sh`: Script to rewrite commit messages for history cleanup
+- `preflight.sh`: Script for preflight checks
+- `all.sh`: Script to run all validations
 
 ## Local Development with Firebase Emulator
 

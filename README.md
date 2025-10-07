@@ -12,6 +12,35 @@ A modern, real-time blog platform built with React, Firebase, and Tailwind CSS.
 - Post creation, editing, deletion, and preview
 - Clean, minimal UI
 
+## Technology Stack & Rationale
+
+- **React 18**: Chosen for its component-based architecture, enabling reusable UI components and efficient rendering with hooks. Provides a modern, declarative way to build interactive UIs.
+- **Firebase Firestore**: Selected for real-time database capabilities without server management. Offers automatic scaling, offline support, and easy integration with React via listeners.
+- **Tailwind CSS**: Used for utility-first CSS approach, allowing rapid UI development with consistent design. Reduces CSS bundle size through purging unused styles.
+- **Lucide React**: Icons library for consistent, scalable SVG icons that match the design system.
+- **PropTypes**: Added for runtime type checking in development, improving code reliability.
+- **Create React App (react-scripts)**: Bootstrapped the project for quick setup with built-in tooling (webpack, Babel, ESLint).
+
+## Current State & Maintenance
+
+### Known Issues
+- **NPM Vulnerabilities**: 9 vulnerabilities (3 moderate, 6 high) related to dependencies like nth-check, postcss, webpack-dev-server. These are in dev dependencies and don't affect production builds. Avoid `npm audit fix --force` as it downgrades react-scripts to 0.0.0, breaking the app.
+- **Deprecated Dependencies**: Some Babel plugins are deprecated but functional. Update when possible.
+- **Node.js Deprecation Warnings**: fs.F_OK and webpack dev server middleware warnings are harmless but indicate outdated tooling.
+
+### Maintenance Tasks
+- Regularly update dependencies: `npm update`
+- Monitor Firebase usage and costs
+- Test Firestore rules in emulator before production
+- Keep Node.js updated (currently supports v16+)
+
+### Troubleshooting
+- **App won't start**: Run `rm -rf node_modules && npm install` to clear cache
+- **Build fails**: Ensure Node.js v16+, check .env file for Firebase config
+- **Firebase connection issues**: Verify .env variables and Firestore rules
+- **Styling issues**: Run `npm run build` to ensure Tailwind purging works
+- **Emulator not connecting**: Ensure Java is installed and emulator is started before app
+
 ## Setup
 
 ### Prerequisites

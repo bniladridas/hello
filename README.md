@@ -139,6 +139,8 @@ Your app will be live at your Firebase hosting URL
 - `npm run test:coverage`: Run tests with coverage report
 - `npm run lint`: Check code linting with Standard JS
 - `npm run lint:fix`: Auto-fix linting issues
+- `npm run format:check`: Check code formatting (alias for lint)
+- `npm run format:fix`: Auto-fix code formatting (alias for lint:fix)
 - `npm run preflight`: Run basic checks (lint, tests, build)
 - `npm run all`: Run all checks and builds
 - `npm run cypress:open`: Open Cypress E2E test runner

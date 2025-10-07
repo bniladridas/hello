@@ -72,15 +72,17 @@ The project now includes comprehensive unit tests (44.36% coverage), E2E tests w
 As a code reviewer, I've assessed the codebase and confirmed the following:
 
 - **Linting**: Passes ESLint with Standard JS rules (no errors)
-- **Testing**: 4 test suites, 12 tests passing (44.36% statement coverage, 20.83% branch coverage)
-- **Build**: Successful production build (129.2 kB JS, 875 B CSS gzipped)
+- **Testing**: 4 unit test suites, 12 tests passing (44.36% statement coverage, 20.83% branch coverage)
+- **E2E Testing**: Cypress tests for UI features (dark mode, navigation, pages)
+- **Build**: Successful production build (133.67 kB JS, 4.09 kB CSS gzipped)
+- **CI/CD**: Docker-based CI pipeline with automated testing and building
 - **Security**: No critical vulnerabilities in production code
 - **Code Organization**: Well-structured with logical folder separation (core/, config/, infra/, etc.)
 - **Dependencies**: Minimal and up-to-date where possible
 - **Documentation**: Comprehensive README with setup, deployment, and maintenance guides
 
 **Recommendations for improvement:**
-- Increase test coverage, especially for App.js Firebase interactions
+- Increase unit test coverage, especially for App.js Firebase interactions (requires advanced mocking)
 - Consider upgrading deprecated dependencies when stable versions are available
 - Implement more comprehensive error handling for production
 
@@ -103,13 +105,7 @@ As a code reviewer, I've assessed the codebase and confirmed the following:
 - **Styling issues**: Run `npm run build` to ensure Tailwind purging works
 - **Emulator not connecting**: Ensure Java is installed and emulator is started before app
 - **Web page format missing**: Stop dev server, clear cache with `rm -rf node_modules && npm install`, restart with `npm start`
-
-### Troubleshooting
-- **App won't start**: Run `rm -rf node_modules && npm install` to clear cache
-- **Build fails**: Ensure Node.js v16+, check .env file for Firebase config
-- **Firebase connection issues**: Verify .env variables and Firestore rules
-- **Styling issues**: Run `npm run build` to ensure Tailwind purging works
-- **Emulator not connecting**: Ensure Java is installed and emulator is started before app
+- **Cypress tests fail**: Ensure app is running on localhost:3000 or use Docker setup with emulator
 
 ## Setup
 
@@ -167,6 +163,8 @@ As a code reviewer, I've assessed the codebase and confirmed the following:
 
 ### Firebase Hosting
 
+Firebase hosting is pre-configured in `firebase.json`. To deploy:
+
 1. Install Firebase CLI:
    ```bash
    npm install -g firebase-tools
@@ -177,25 +175,19 @@ As a code reviewer, I've assessed the codebase and confirmed the following:
    firebase login
    ```
 
-3. Initialize Firebase in your project:
-   ```bash
-   firebase init
-   ```
-   - Select "Hosting"
-   - Choose `build` as the public directory
-   - Configure as a single-page app (SPA)
-
-4. Build the app:
+3. Build the app:
    ```bash
    npm run build
    ```
 
-5. Deploy:
+4. Deploy:
    ```bash
-   firebase deploy
+   firebase deploy --only hosting
    ```
 
-Your app will be live at your Firebase hosting URL
+Your app will be live at your Firebase hosting URL.
+
+**Note**: The `firebase.json` is already configured for hosting with SPA routing. If you need to initialize Firebase in your project, run `firebase init` and select "Hosting" (the existing config will be preserved).
 
 ## Scripts
 
@@ -209,8 +201,8 @@ Your app will be live at your Firebase hosting URL
 - `npm run format:fix`: Auto-fix code formatting (alias for lint:fix)
 - `npm run preflight`: Run basic checks (lint, tests, build)
 - `npm run all`: Run all checks and builds
-- `npm run cypress:open`: Open Cypress E2E test runner
-- `npm run cypress:run`: Run Cypress E2E tests headlessly
+- `npm run cypress:open`: Open Cypress E2E test runner (requires app running on localhost:3000)
+- `npm run cypress:run`: Run Cypress E2E tests headlessly (requires app running on localhost:3000)
 - `npm run eject`: Eject from Create React App
 
 Custom scripts in `scripts/`:
@@ -234,6 +226,8 @@ docker run --rm hello:latest npm run all
 # Run with Firebase emulator
 docker-compose -f infra/docker-compose.yml up --build
 ```
+
+The Docker CI workflow (`.github/workflows/docker-ci.yml`) automatically builds the app in a container, runs all tests including Cypress E2E tests, and verifies the build process.
 
 ## Local Development with Firebase Emulator
 

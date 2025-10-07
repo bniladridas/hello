@@ -1,10 +1,10 @@
 // src/BlogList.js
 import React from 'react'
-import Post from './Post'
+import Post from '../Post/Post'
 
 const BlogList = ({ posts, onEdit, onDelete }) => {
   return (
-    <div className="blog-list">
+    <div className='blog-list'>
       {posts.map((post) => (
         <Post key={post.id} post={post} onEdit={onEdit} onDelete={onDelete} />
       ))}

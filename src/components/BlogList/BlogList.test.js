@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import BlogList from './BlogList'
 
 // Mock the Post component to avoid testing it here
-jest.mock('./Post', () => {
+jest.mock('../Post/Post', () => {
   return function MockPost ({ post, onEdit, onDelete }) {
     return <div data-testid={`post-${post.id}`}>{post.title}</div>
   }

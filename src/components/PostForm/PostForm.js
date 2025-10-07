@@ -22,20 +22,20 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
   return (
     <form onSubmit={handleSubmit}>
       <input
-        type="text"
+        type='text'
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Post Title"
+        placeholder='Post Title'
         required
       />
       <textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="Post Content"
+        placeholder='Post Content'
         required
       />
-      <button type="submit">Save</button>
-      <button type="button" onClick={onCancel}>
+      <button type='submit'>Save</button>
+      <button type='button' onClick={onCancel}>
         Cancel
       </button>
     </form>

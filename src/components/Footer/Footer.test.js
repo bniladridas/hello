@@ -4,7 +4,7 @@ import Footer from './Footer'
 
 // Mock lucide-react icons
 jest.mock('lucide-react', () => ({
-  Github: () => <div data-testid="github-icon" />
+  Github: () => <div data-testid='github-icon' />
 }))
 
 describe('Footer', () => {

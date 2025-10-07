@@ -396,7 +396,7 @@ const App = () => {
                    <li>
                      <Link
                        to="/"
-                       onClick={() => setIsDrawerOpen(false)}
+                       onClick={() => setTimeout(() => setIsDrawerOpen(false), 0)}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <Home size={18} className='mr-3' />
@@ -406,7 +406,7 @@ const App = () => {
                    <li>
                      <Link
                        to="/privacy"
-                       onClick={() => setIsDrawerOpen(false)}
+                       onClick={() => setTimeout(() => setIsDrawerOpen(false), 0)}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <Shield size={18} className='mr-3' />
@@ -416,7 +416,7 @@ const App = () => {
                    <li>
                      <Link
                        to="/terms"
-                       onClick={() => setIsDrawerOpen(false)}
+                       onClick={() => setTimeout(() => setIsDrawerOpen(false), 0)}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <FileText size={18} className='mr-3' />

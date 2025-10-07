@@ -6,6 +6,13 @@
 set -e  # Exit on any error
 
 clear
+echo "
+  ___  _     _        _    ___      _ _     _ _
+ / _ \| |__ (_)___ __| |__/ __|_ __| | |___| | |
+| (_) | '_ \| / -_) _| / -_)__ \ _  | | / _ \ | |
+ \___/|_.__// \___\__|_\___|___/\__,_|_|_\___/_|_|
+           |__/
+"
 echo "Running all checks and builds..."
 
 # Check if node_modules exists

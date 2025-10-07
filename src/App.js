@@ -10,34 +10,34 @@ import PropTypes from 'prop-types';
 // Post Component
 const Post = ({ post, onEdit, onDelete, onPreview }) => {
   return (
-    <div className="bg-white p-6 mb-6">
+    <div className="bg-white dark:bg-gray-800 p-6 mb-6">
       <div className="flex justify-between items-start mb-3">
-          <h3 className="text-lg font-medium text-gray-900 flex-1">{post.title}</h3>
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white flex-1">{post.title}</h3>
         <div className="flex space-x-1 ml-4">
           <button
             onClick={() => onPreview(post)}
-            className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             aria-label={`Preview ${post.title}`}
           >
             <Eye size={16} />
           </button>
           <button
             onClick={() => onEdit(post.id)}
-            className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             aria-label={`Edit ${post.title}`}
           >
             <Pencil size={16} />
           </button>
           <button
             onClick={() => onDelete(post.id)}
-            className="p-1 text-gray-400 hover:text-gray-600 transition-colors"
+            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             aria-label={`Delete ${post.title}`}
           >
             <Trash size={16} />
           </button>
         </div>
       </div>
-      <p className="text-gray-600 text-sm leading-relaxed line-clamp-3">{post.content}</p>
+      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3">{post.content}</p>
     </div>
   );
 };
@@ -62,7 +62,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
   };
 
   return (
-    <div className="bg-white p-6">
+    <div className="bg-white dark:bg-gray-800 p-6">
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <input
@@ -70,7 +70,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Post title"
-            className="w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-900 text-lg font-medium"
+            className="w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-900 dark:text-white text-lg font-medium"
             required
             aria-label="Post Title"
           />
@@ -80,7 +80,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
             value={content}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Write your post..."
-            className="w-full min-h-[120px] px-0 py-2 bg-transparent border-0 focus:outline-none focus:ring-0 text-gray-700 text-sm resize-none"
+            className="w-full min-h-[120px] px-0 py-2 bg-transparent border-0 focus:outline-none focus:ring-0 text-gray-700 dark:text-gray-300 text-sm resize-none"
             required
             aria-label="Post Content"
           />
@@ -98,7 +98,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
           )}
           <button
             type="submit"
-            className="px-4 py-2 bg-gray-900 text-white text-sm hover:bg-gray-800"
+            className="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm hover:bg-gray-800 dark:hover:bg-gray-100"
             aria-label="Save Post"
           >
             {currentPost ? 'Update' : 'Publish'}
@@ -137,13 +137,13 @@ const PostPreviewModal = ({ post, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden">
-        <div className="p-6 border-b border-gray-200">
+      <div className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-start">
-            <h2 className="text-xl font-medium text-gray-900 pr-4">{post.title}</h2>
+            <h2 className="text-xl font-medium text-gray-900 dark:text-white pr-4">{post.title}</h2>
             <button
               onClick={onClose}
-              className="p-2 text-gray-400 hover:text-gray-600 rounded-md hover:bg-gray-50 transition-colors"
+              className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
               aria-label="Close Preview"
             >
               <X size={20} />
@@ -151,7 +151,7 @@ const PostPreviewModal = ({ post, onClose }) => {
           </div>
         </div>
         <div className="p-6 overflow-y-auto max-h-[60vh]">
-          <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">{post.content}</p>
         </div>
       </div>
     </div>
@@ -166,21 +166,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [previewPost, setPreviewPost] = useState(null);
-  // Fetch posts from Firebase
-  useEffect(() => {
-    const q = query(collection(db, 'posts'), limit(40));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const fetchedPosts = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setPosts(fetchedPosts);
-      setLoading(false);
-      setError('');
-    }, (error) => {
-      setError('Failed to fetch posts.');
-      setLoading(false);
-    });
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
     return () => unsubscribe();
   }, []);
@@ -252,25 +238,34 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
         <header className="mb-12 pb-6">
-          <h1 className="text-2xl font-semibold text-gray-900">
-            Hello
-          </h1>
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+              Hello
+            </h1>
+            <button
+              onClick={toggleDarkMode}
+              className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+              aria-label="Toggle dark mode"
+            >
+              {isDarkMode ? 'Light' : 'Dark'}
+            </button>
+          </div>
 
 
         </header>
 
         {error && (
-          <div className="mb-6 p-4 text-red-700">
+          <div className="mb-6 p-4 text-red-700 dark:text-red-300">
             {error}
           </div>
         )}
 
         {loading ? (
           <div className="flex items-center justify-center py-16">
-            <div className="animate-spin rounded-full h-10 w-10 border-2 border-gray-300 border-t-gray-600"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-gray-300 border-t-gray-600 dark:border-gray-600 dark:border-t-gray-400"></div>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

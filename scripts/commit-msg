@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Read the commit message
+commit_msg=$(cat $1)
+
+# Check length (max 60 characters)
+if [ ${#commit_msg} -gt 60 ]; then
+    echo "Error: Commit message is too long (${#commit_msg} characters). Max 60 characters."
+    exit 1
+fi
+
+# Check if it starts with conventional commit type
+if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|perf|ci|build|revert)(\(.+\))?: "; then
+    echo "Error: Commit message must start with a conventional commit type (e.g., feat:, fix:, docs:, etc.)"
+    exit 1
+fi
+
+echo "Commit message is valid."
+exit 0

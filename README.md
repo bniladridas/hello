@@ -246,6 +246,8 @@ The repository uses a commit-msg hook to enforce:
 - Messages are lowercase
 - Maximum 60 characters
 
+**Activation:** The hook is active in `.git/hooks/commit-msg`. All commits are validated automatically.
+
 ## Usage
 
 - View posts on the home page

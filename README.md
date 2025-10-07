@@ -1,5 +1,7 @@
 # Hello
 
+[![Docker CI](https://github.com/bniladridas/hello/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/bniladridas/hello/actions/workflows/docker-ci.yml)
+
 A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 
 ## Features
@@ -11,6 +13,20 @@ A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 - Single-page application
 - Post creation, editing, deletion, and preview
 - Clean, minimal UI
+
+## Quick Start
+
+```bash
+# Clone the repository
+git clone <repository-url>
+cd hello
+
+# Install dependencies
+npm install
+
+# Start development server
+npm start
+```
 
 ## Technology Stack & Rationale
 
@@ -169,9 +185,22 @@ Custom scripts in `scripts/`:
 - `rewrite_msg.sh`: Script to rewrite commit messages for history cleanup
 - `preflight.sh`: Script for preflight checks (also used by `npm run all`)
 
+  Usage: `bash scripts_custom/preflight.sh`
+
 ## Infrastructure
 
 See `infra/` folder for infrastructure-as-code, including Docker setup for local development with Firebase emulator.
+
+### Docker Commands
+
+```bash
+# Build and test with Docker
+docker build -f infra/Dockerfile -t hello:latest .
+docker run --rm hello:latest npm run all
+
+# Run with Firebase emulator
+docker-compose -f infra/docker-compose.yml up --build
+```
 
 ## Local Development with Firebase Emulator
 

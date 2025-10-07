@@ -45,16 +45,34 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates to Privacy Policy page', () => {
-    // Navigate to privacy policy page
-    cy.visit('/privacy')
+    // Open drawer
+    cy.get('[aria-label="Open menu"]').click()
+
+    // Wait for drawer to open
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
+
+    // Click Privacy Policy in drawer
+    cy.get('.fixed.top-0.left-0 a').contains('Privacy Policy').click()
+
+    // Close drawer
+    cy.get('[aria-label="Close menu"]').click()
 
     // Check that Privacy Policy content is visible (confirms navigation worked)
     cy.contains('We are committed to protecting your privacy').should('be.visible')
   })
 
   it('navigates to Terms of Service page', () => {
-    // Navigate to terms of service page
-    cy.visit('/terms')
+    // Open drawer
+    cy.get('[aria-label="Open menu"]').click()
+
+    // Wait for drawer to open
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
+
+    // Click Terms of Service in drawer
+    cy.get('.fixed.top-0.left-0 a').contains('Terms of Service').click()
+
+    // Close drawer
+    cy.get('[aria-label="Close menu"]').click()
 
     // Check that Terms of Service content is visible (confirms navigation worked)
     cy.contains('Welcome to our blog').should('be.visible')
@@ -67,8 +85,17 @@ describe('Hello Blog App', () => {
     // Verify we're on privacy page
     cy.contains('We are committed to protecting your privacy').should('be.visible')
 
-    // Go back to home
-    cy.visit('/')
+    // Open drawer
+    cy.get('[aria-label="Open menu"]').click()
+
+    // Wait for drawer to open
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
+
+    // Click Home in drawer
+    cy.get('.fixed.top-0.left-0 a').contains('Home').click()
+
+    // Close drawer
+    cy.get('[aria-label="Close menu"]').click()
 
     // Check we're back to blog view
     cy.contains('Hello').should('be.visible')

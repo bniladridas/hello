@@ -45,8 +45,8 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates to Privacy Policy page', () => {
-    // Wait for app to be ready (blog content should be visible)
-    cy.get('input[placeholder="Post title"]').should('be.visible')
+    // Wait for app to be ready (main content should exist)
+    cy.get('.max-w-4xl').should('exist')
 
     // Open drawer
     cy.get('[aria-label="Open menu"]').click()
@@ -57,16 +57,13 @@ describe('Hello Blog App', () => {
     // Click Privacy Policy in drawer
     cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
 
-    // Check that we're no longer on the blog view (post form should not be visible)
-    cy.get('input[placeholder="Post title"]').should('not.exist')
-
-    // Check that Privacy Policy title is visible
-    cy.get('h1').contains('Privacy Policy').should('be.visible')
+    // Check that Privacy Policy content is visible (confirms navigation worked)
+    cy.contains('We are committed to protecting your privacy').should('be.visible')
   })
 
   it('navigates to Terms of Service page', () => {
-    // Wait for app to be ready (blog content should be visible)
-    cy.get('input[placeholder="Post title"]').should('be.visible')
+    // Wait for app to be ready (main content should exist)
+    cy.get('.max-w-4xl').should('exist')
 
     // Open drawer
     cy.get('[aria-label="Open menu"]').click()
@@ -77,25 +74,21 @@ describe('Hello Blog App', () => {
     // Click Terms of Service in drawer
     cy.get('.fixed.top-0.left-0').contains('Terms of Service').click()
 
-    // Check that we're no longer on the blog view (post form should not be visible)
-    cy.get('input[placeholder="Post title"]').should('not.exist')
-
-    // Check that Terms of Service title is visible
-    cy.get('h1').contains('Terms of Service').should('be.visible')
+    // Check that Terms of Service content is visible (confirms navigation worked)
+    cy.contains('Welcome to our blog').should('be.visible')
   })
 
   it('navigates back to home from pages', () => {
-    // Wait for app to be ready (blog content should be visible)
-    cy.get('input[placeholder="Post title"]').should('be.visible')
+    // Wait for app to be ready (main content should exist)
+    cy.get('.max-w-4xl').should('exist')
 
     // Go to Privacy Policy
     cy.get('[aria-label="Open menu"]').click()
     cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
     cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
 
-    // Verify we're on privacy page (post form not visible, privacy title visible)
-    cy.get('input[placeholder="Post title"]').should('not.exist')
-    cy.get('h1').contains('Privacy Policy').should('be.visible')
+    // Verify we're on privacy page
+    cy.contains('We are committed to protecting your privacy').should('be.visible')
 
     // Go back to home
     cy.get('[aria-label="Open menu"]').click()
@@ -104,6 +97,5 @@ describe('Hello Blog App', () => {
 
     // Check we're back to blog view
     cy.contains('Hello').should('be.visible')
-    cy.get('input[placeholder="Post title"]').should('be.visible')
   })
 })

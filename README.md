@@ -246,6 +246,19 @@ The repository uses a commit-msg hook to enforce:
 - Messages are lowercase
 - Maximum 60 characters
 
+The script truncates commit messages to exactly 60 characters if they exceed that length:
+
+```bash
+if [ ${#msg} -gt 60 ]; then
+    msg="${msg:0:60}"
+fi
+```
+
+This performs a hard cutoff at 60 characters, which may split words or sentences mid-way. For example:
+- "This is a very long commit message that exceeds the limit" → "This is a very long commit message that exceeds the li"
+
+If you'd like to improve this (e.g., truncate at word boundaries or add ellipsis), I can modify the script. Otherwise, it ensures messages stay within the 60-char limit.
+
 **Activation:** The hook is active in `.git/hooks/commit-msg`. All commits are validated automatically.
 
 To activate locally (for contributors):

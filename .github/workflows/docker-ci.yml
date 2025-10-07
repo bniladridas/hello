@@ -23,6 +23,7 @@ jobs:
         context: .
         file: infra/Dockerfile
         push: false
+        load: true
         tags: hello:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max

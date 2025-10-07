@@ -1,178 +1,101 @@
-# Gravity Blog
+# Hello Blog
 
-Current Date and Time (UTC): 2024-12-06 15:58:52  
-Author: @bniladridas
+A modern, real-time blog platform built with React, Firebase, and Tailwind CSS.
 
-A modern, real-time blog platform leveraging React, Firebase, and Vercel Edge Network for optimal performance and scalability.
+## Features
 
-## ⚡ Quick Links
-- [Live Demo](https://gravity-blog-xi.vercel.app)
-- [Documentation](./docs)
-- [Contributing Guide](CONTRIBUTING.md)
-- [Deployment Guide](DEPLOYMENT.md)
-
-## 🌟 Key Features
-- Real-time post updates via Firebase
-- Edge-optimized content delivery
-- Dark/Light mode support
+- Real-time post updates
 - Responsive design
-- Post preview functionality
-- Global CDN integration
+- Firebase Firestore integration
+- Dark mode toggle
 
-## 🏗️ System Architecture
-
-### High-Level Architecture Diagram
-```
-┌─────────────────────────────────────────────────┐
-│                   Client Layer                  │
-│  ┌─────────────────┐      ┌─────────────────┐  │
-│  │    React App    │      │   Static Assets  │  │
-│  │  (CSR/Vercel)   │      │    (CDN/Edge)   │  │
-│  └────────┬────────┘      └────────┬────────┘  │
-└──────────┬─────────────────────────┬───────────┘
-           │                         │
-           ▼                         ▼
-┌─────────────────────────────────────────────────┐
-│               Vercel Edge Network               │
-│  ┌─────────────────┐      ┌─────────────────┐  │
-│  │   Edge Caching  │      │   Global CDN    │  │
-│  └────────┬────────┘      └────────┬────────┘  │
-└──────────┬─────────────────────────┬───────────┘
-           │                         │
-           ▼                         ▼
-┌─────────────────────────────────────────────────┐
-│              Firebase Services                  │
-│  ┌─────────────────┐      ┌─────────────────┐  │
-│  │    Firestore    │      │  Firebase Auth  │  │
-│  │    Database     │      │   (Optional)    │  │
-│  └─────────────────┘      └─────────────────┘  │
-└─────────────────────────────────────────────────┘
-```
-
-### Component Architecture
-```
-┌─────────────────────────────────────────────────┐
-│                    App.js                       │
-│                                                 │
-│  ┌──────────┐ ┌──────────┐ ┌───────────────┐  │
-│  │ PostForm │ │ BlogList │ │ PreviewModal  │  │
-│  └────┬─────┘ └────┬─────┘ └───────┬───────┘  │
-│       │           │              │          │  │
-│       ▼           ▼              ▼          │  │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐    │  │
-│  │  Post    │ │ Footer   │ │ Toggle   │    │  │
-│  │Component │ │Component │ │ Switch   │    │  │
-│  └──────────┘ └──────────┘ └──────────┘    │  │
-└─────────────────────────────────────────────────┘
-```
-
-### Data Flow Architecture
-```
-┌──────────────┐     ┌───────────────┐     ┌──────────────┐
-│ User Action  │────▶│ React State   │────▶│   Firebase   │
-│              │     │ Management    │     │  Firestore   │
-└──────────────┘     └───────────────┘     └──────────┬───┘
-       ▲                                              │
-       │                                              │
-       └──────────────────────────────────────────────┘
-            Real-time Updates via onSnapshot
-```
-
-## 🛠️ Tech Stack
-- **Frontend:** React, TailwindCSS
-- **Database:** Firebase Firestore
-- **Deployment:** Vercel Edge Network
-- **State Management:** React Hooks
-- **Real-time Updates:** Firebase SDK
-- **UI Components:** Lucide React
-
-## 🚀 Getting Started
+## Setup
 
 ### Prerequisites
-- Node.js (v16+)
+- Node.js (v16 or higher)
 - npm or yarn
 - Firebase account
-- Vercel account
 
 ### Installation
-```bash
-# Clone repository
-git clone https://github.com/bniladridas/gravity-blog.git
 
-# Install dependencies
-cd gravity-blog
-npm install
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/bniladridas/hello.git
+   cd hello
+   ```
 
-# Set up environment variables
-cp .env.example .env.local
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-# Start development server
-npm start
-```
+3. Set up Firebase:
+   - Go to [Firebase Console](https://console.firebase.google.com)
+   - Create a new project named "hello"
+   - Enable Firestore Database (start in test mode)
+   - In Project settings > General > Your apps, add a web app
+   - Copy the Firebase config and update `.env`:
+     ```
+     REACT_APP_FIREBASE_API_KEY=your_api_key
+     REACT_APP_FIREBASE_AUTH_DOMAIN=hello-9178d.firebaseapp.com
+     REACT_APP_FIREBASE_PROJECT_ID=hello-9178d
+     REACT_APP_FIREBASE_STORAGE_BUCKET=hello-9178d.firebasestorage.app
+     REACT_APP_FIREBASE_MESSAGING_SENDER_ID=585833449097
+     REACT_APP_FIREBASE_APP_ID=1:585833449097:web:d3bdc2bf23e0db0bca6858
+     ```
 
-### Environment Variables
-```env
-REACT_APP_FIREBASE_API_KEY=your_api_key
-REACT_APP_FIREBASE_AUTH_DOMAIN=your_domain
-REACT_APP_FIREBASE_PROJECT_ID=your_project_id
-REACT_APP_FIREBASE_STORAGE_BUCKET=your_bucket
-REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-REACT_APP_FIREBASE_APP_ID=your_app_id
-```
+4. Run the app locally:
+   ```bash
+   npm start
+   ```
 
-## 📦 Deployment
-```bash
-# Install Vercel CLI
-npm i -g vercel
+## Deployment
 
-# Deploy to production
-vercel --prod
-```
+### Firebase Hosting
 
-## 🔧 Technical Details
+1. Install Firebase CLI:
+   ```bash
+   npm install -g firebase-tools
+   ```
 
-### Performance Optimizations
-- Query limits (40 posts per fetch)
-- Edge caching for static content
-- Lazy loading for modals
-- Optimistic UI updates
-- Real-time data synchronization
+2. Login to Firebase:
+   ```bash
+   firebase login
+   ```
 
-### Security Features
-- Firebase security rules
-- Input validation
-- XSS protection
-- CORS policies
+3. Initialize Firebase in your project:
+   ```bash
+   firebase init
+   ```
+   - Select "Hosting"
+   - Choose `build` as the public directory
+   - Configure as a single-page app (SPA)
 
-### Scalability
-- Distributed CDN
-- Edge computing capabilities
-- Database sharding support
-- Horizontal scaling
+4. Build the app:
+   ```bash
+   npm run build
+   ```
 
-## 🤝 Contributing
-See [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+5. Deploy:
+   ```bash
+   firebase deploy
+   ```
 
-## 📜 License
-MIT License - see [LICENSE](LICENSE) for details.
+Your app will be live at `https://hello-9178d.web.app`
 
-## 📚 Documentation
-- [Deployment Guide](DEPLOYMENT.md)
-- [Security Policy](SECURITY.md)
-- [API Documentation](API.md)
-- [Changelog](CHANGELOG.md)
+## Usage
 
-## 👤 Author
-**Bniladridas**
-- LinkedIn: [bniladridas](https://www.linkedin.com/in/bniladridas/)
-- Twitter: [@bniladridas](https://x.com/bniladridas)
+- View posts on the home page
+- Add new posts using the form
+- Toggle dark mode with the switch
 
-## 🙏 Acknowledgments
-- React Team
-- Firebase Team
-- Vercel Team
-- TailwindCSS Team
-- Lucide React Team
+## Contributing
 
----
-Last updated: 2024-12-06 15:58:52 UTC
+1. Fork the repo
+2. Create a feature branch
+3. Make changes
+4. Submit a PR
+
+## License
+
+MIT License

@@ -1,55 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase/config';
 import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, limit, query } from 'firebase/firestore';
-import { Pencil, Save, Trash, FileText, Eye, Menu, X, Feather, Globe, BookOpen } from 'lucide-react';
+import { Pencil, Save, Trash, Eye, Globe, X, FileText } from 'lucide-react';
 import ToggleSwitch from './ToggleSwitch';
-import TermsOfService from './TermsOfService';
-import PrivacyPolicy from './PrivacyPolicy';
 import PropTypes from 'prop-types';
 
-// Mobile Menu Component
-const MobileMenu = ({ isOpen, onClose, onNavigate }) => {
-  if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 z-50 md:hidden">
-      <div className="fixed inset-0 bg-gradient-to-br from-blue-500/50 to-purple-600/50" onClick={onClose}></div>
-      <div className="fixed inset-y-0 left-0 w-64 bg-white dark:bg-gray-900 shadow-2xl transform transition-transform duration-300 ease-in-out rounded-r-2xl">
-        <div className="p-6">
-          <button 
-            onClick={onClose}
-            className="absolute top-4 right-4 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
-            aria-label="Close menu"
-          >
-            <X size={24} />
-          </button>
-          <div className="mt-8 space-y-4">
-            <div className="flex items-center space-x-3 mb-6">
-              <Globe className="text-blue-500" size={24} />
-              <h2 className="text-xl font-semibold text-gray-800 dark:text-white">Synthara</h2>
-            </div>
-            <nav className="flex flex-col space-y-3">
-              {[
-                { name: 'Home', icon: BookOpen, page: 'home' },
-                { name: 'Terms of Service', icon: FileText, page: 'terms' },
-                { name: 'Privacy Policy', icon: Feather, page: 'privacy' }
-              ].map(({ name, icon: Icon, page }) => (
-                <button 
-                  key={page}
-                  onClick={() => onNavigate(page)}
-                  className="flex items-center space-x-3 px-4 py-2 text-gray-600 hover:bg-blue-50 dark:hover:bg-gray-800 rounded-lg transition"
-                >
-                  <Icon size={20} className="text-blue-500" />
-                  <span className="dark:text-white">{name}</span>
-                </button>
-              ))}
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 
 // Post Component
 const Post = ({ post, onEdit, onDelete, onPreview }) => {
@@ -202,35 +158,11 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [previewPost, setPreviewPost] = useState(null);
-  const [currentPage, setCurrentPage] = useState('home');
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true';
   });
 
-  // Handle body scroll lock when menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMenuOpen]);
 
-  // Close menu on window resize
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
 
   // Fetch posts from Firebase
   useEffect(() => {
@@ -246,7 +178,6 @@ const App = () => {
     }, (error) => {
       setError('Failed to fetch posts.');
       setLoading(false);
-      console.error("Error fetching posts: ", error);
     });
 
     return () => unsubscribe();
@@ -266,14 +197,7 @@ const App = () => {
     setIsDarkMode(!isDarkMode);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
 
-  const handleNavigate = (page) => {
-    setCurrentPage(page);
-    setIsMenuOpen(false);
-  };
 
   const handleSavePost = async (post) => {
     if (post.title.trim() === '' || post.content.trim() === '') {
@@ -302,7 +226,6 @@ const App = () => {
       setEditingId(null);
     } catch (error) {
       setError('Failed to save post.');
-      console.error("Error saving post: ", error);
     }
   };
 
@@ -313,7 +236,6 @@ const App = () => {
         setError('');
       } catch (error) {
         setError('Failed to delete post.');
-        console.error("Error deleting post: ", error);
       }
     }
   };
@@ -348,58 +270,17 @@ const App = () => {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <Globe className="text-blue-500" size={36} />
-              <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-                Synthara's Forum
-              </h1>
+               <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+                 Hello
+               </h1>
             </div>
             <div className="flex items-center space-x-4">
               <ToggleSwitch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
-              <button 
-                onClick={toggleMenu}
-                className="md:hidden p-2 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
-                aria-label="Toggle Menu"
-                aria-expanded={isMenuOpen}
-              >
-                <Menu size={24} />
-              </button>
             </div>
           </div>
 
-          <nav className="hidden md:flex mt-6 justify-center space-x-8">
-            {[
-              { name: 'Home', page: 'home' },
-              { name: 'Terms of Service', page: 'terms' },
-              { name: 'Privacy Policy', page: 'privacy' }
-            ].map(({ name, page }) => (
-              <button 
-                key={page}
-                onClick={() => handleNavigate(page)}
-                className={`relative group ${
-                  currentPage === page 
-                    ? 'text-blue-600 dark:text-blue-400 font-semibold' 
-                    : 'text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white'
-                }`}
-              >
-                {name}
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-blue-500 scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></span>
-              </button>
-            ))}
-            <a 
-              href="https://synthara-ml-platform.vercel.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 flex items-center"
-            >
-              Our Platform
-            </a>
-          </nav>
-        </header>
 
-        <MobileMenu 
-          isOpen={isMenuOpen} 
-          onClose={() => setIsMenuOpen(false)}
-          onNavigate={handleNavigate}
-        />
+        </header>
 
         {error && (
           <div className="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-100 rounded-lg">
@@ -407,39 +288,34 @@ const App = () => {
           </div>
         )}
 
-        {currentPage === 'home' && (
-          <>
-            {loading ? (
-              <div className="flex items-center justify-center py-12">
-                <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="md:sticky md:top-4 self-start">
-                  <PostForm 
-                    currentPost={currentPost} 
-                    onSave={handleSavePost} 
-                    onCancel={handleCancel} 
-                  />
-                </div>
-                <div>
-                  <h2 className="text-xl font-light mb-4 flex items-center text-gray-800 dark:text-white">
-                    <FileText className="mr-2" /> Posts
-                  </h2>
-                  <BlogList 
-                    posts={posts} 
-                    onEdit={handleEditPost} 
-                    onDelete={handleDeletePost} 
-                    onPreview={handlePreviewPost} 
-                  />
-                </div>
-              </div>
-            )}
-          </>
+        {loading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="md:sticky md:top-4 self-start">
+              <PostForm
+                currentPost={currentPost}
+                onSave={handleSavePost}
+                onCancel={handleCancel}
+              />
+            </div>
+            <div>
+              <h2 className="text-xl font-light mb-4 flex items-center text-gray-800 dark:text-white">
+                <FileText className="mr-2" /> Posts
+              </h2>
+              <BlogList
+                posts={posts}
+                onEdit={handleEditPost}
+                onDelete={handleDeletePost}
+                onPreview={handlePreviewPost}
+              />
+            </div>
+          </div>
         )}
 
-        {currentPage === 'terms' && <TermsOfService />}
-        {currentPage === 'privacy' && <PrivacyPolicy />}
+
 
         {previewPost && (
           <PostPreviewModal 
@@ -448,20 +324,13 @@ const App = () => {
           />
         )}
 
-        <footer className="mt-12 text-center text-gray-500 dark:text-gray-400">
-          <p>&copy; {new Date().getFullYear()} Synthara</p>
-        </footer>
+
       </div>
     </div>
   );
 };
 
 // PropTypes definitions
-MobileMenu.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  onNavigate: PropTypes.func.isRequired,
-};
 
 Post.propTypes = {
   post: PropTypes.shape({

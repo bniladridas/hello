@@ -1,20 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase/config';
-import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, limit, query } from 'firebase/firestore';
+import {
+  collection,
+  onSnapshot,
+  doc,
+  updateDoc,
+  addDoc,
+  deleteDoc,
+  limit,
+  query,
+} from 'firebase/firestore';
 import { Pencil, Trash, Eye, X, Menu, Home, FileText, Shield } from 'lucide-react';
 
 import PropTypes from 'prop-types';
 import PrivacyPolicy from './PrivacyPolicy';
 import TermsOfService from './TermsOfService';
 
-
-
 // Post Component
 const Post = ({ post, onEdit, onDelete, onPreview }) => {
   return (
     <div className="bg-white dark:bg-gray-800 p-6 mb-6">
       <div className="flex justify-between items-start mb-3">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white flex-1 leading-tight">{post.title}</h3>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-white flex-1 leading-tight">
+          {post.title}
+        </h3>
         <div className="flex space-x-1 ml-4">
           <button
             onClick={() => onPreview(post)}
@@ -39,7 +48,9 @@ const Post = ({ post, onEdit, onDelete, onPreview }) => {
           </button>
         </div>
       </div>
-      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mt-2">{post.content}</p>
+      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mt-2">
+        {post.content}
+      </p>
     </div>
   );
 };
@@ -119,7 +130,13 @@ const BlogList = ({ posts, onEdit, onDelete, onPreview }) => {
         <p className="text-gray-500 dark:text-gray-400">No posts yet. Start writing!</p>
       ) : (
         posts.map((post) => (
-          <Post key={post.id} post={post} onEdit={onEdit} onDelete={onDelete} onPreview={onPreview} />
+          <Post
+            key={post.id}
+            post={post}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onPreview={onPreview}
+          />
         ))
       )}
     </div>
@@ -153,7 +170,9 @@ const PostPreviewModal = ({ post, onClose }) => {
           </div>
         </div>
         <div className="p-6 overflow-y-auto max-h-[60vh]">
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
+            {post.content}
+          </p>
         </div>
       </div>
     </div>
@@ -175,18 +194,22 @@ const App = () => {
   // Fetch posts from Firebase
   useEffect(() => {
     const q = query(collection(db, 'posts'), limit(40));
-    const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      const fetchedPosts = querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data()
-      }));
-      setPosts(fetchedPosts);
-      setLoading(false);
-      setError('');
-    }, (error) => {
-      setError('Failed to fetch posts.');
-      setLoading(false);
-    });
+    const unsubscribe = onSnapshot(
+      q,
+      (querySnapshot) => {
+        const fetchedPosts = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setPosts(fetchedPosts);
+        setLoading(false);
+        setError('');
+      },
+      (error) => {
+        setError('Failed to fetch posts.');
+        setLoading(false);
+      }
+    );
 
     return () => unsubscribe();
   }, []);
@@ -216,14 +239,14 @@ const App = () => {
         await updateDoc(postRef, {
           title: post.title,
           content: post.content,
-          updatedAt: new Date()
+          updatedAt: new Date(),
         });
       } else {
         await addDoc(collection(db, 'posts'), {
           title: post.title,
           content: post.content,
           createdAt: new Date(),
-          updatedAt: new Date()
+          updatedAt: new Date(),
         });
       }
       setError('');
@@ -246,7 +269,7 @@ const App = () => {
   };
 
   const handleEditPost = (id) => {
-    const post = posts.find(post => post.id === id);
+    const post = posts.find((post) => post.id === id);
     if (post) {
       setCurrentPost(post);
       setEditingId(id);
@@ -281,9 +304,7 @@ const App = () => {
               >
                 <Menu size={20} />
               </button>
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                Hello
-              </h1>
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">Hello</h1>
             </div>
             <button
               onClick={toggleDarkMode}
@@ -293,50 +314,40 @@ const App = () => {
               {isDarkMode ? 'Light' : 'Dark'}
             </button>
           </div>
-
-
         </header>
 
-        {error && (
-          <div className="mb-6 p-4 text-red-700 dark:text-red-300">
-            {error}
-          </div>
-        )}
+        {error && <div className="mb-6 p-4 text-red-700 dark:text-red-300">{error}</div>}
 
         {loading ? (
           <div>
             <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">Loading posts...</div>
             <div className="space-y-6">
               {[...Array(3)].map((_, i) => (
-              <div key={i} className="bg-white dark:bg-gray-800 p-6 animate-pulse">
-                <div className="flex justify-between items-start mb-3">
-                  <div className="flex-1">
-                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+                <div key={i} className="bg-white dark:bg-gray-800 p-6 animate-pulse">
+                  <div className="flex justify-between items-start mb-3">
+                    <div className="flex-1">
+                      <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+                      <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/4"></div>
+                    </div>
+                    <div className="flex space-x-1">
+                      <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                      <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    </div>
                   </div>
-                  <div className="flex space-x-1">
-                    <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                    <div className="w-8 h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                  <div className="space-y-2">
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6"></div>
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6"></div>
-                </div>
-              </div>
               ))}
             </div>
           </div>
         ) : currentView === 'blog' ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
-              <PostForm
-                currentPost={currentPost}
-                onSave={handleSavePost}
-                onCancel={handleCancel}
-              />
+              <PostForm currentPost={currentPost} onSave={handleSavePost} onCancel={handleCancel} />
             </div>
             <div className="lg:col-span-2">
               <BlogList
@@ -353,18 +364,18 @@ const App = () => {
           <TermsOfService />
         ) : null}
 
-
-
-        {previewPost && (
-          <PostPreviewModal
-            post={previewPost}
-            onClose={handleClosePreview}
-          />
-        )}
+        {previewPost && <PostPreviewModal post={previewPost} onClose={handleClosePreview} />}
 
         <>
-          {isDrawerOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setIsDrawerOpen(false)}></div>}
-          <div className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-700 shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+          {isDrawerOpen && (
+            <div
+              className="fixed inset-0 bg-black bg-opacity-50 z-40"
+              onClick={() => setIsDrawerOpen(false)}
+            ></div>
+          )}
+          <div
+            className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-700 shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}
+          >
             <div className="p-4">
               <button
                 onClick={() => setIsDrawerOpen(false)}
@@ -377,7 +388,10 @@ const App = () => {
                 <ul className="space-y-2">
                   <li>
                     <button
-                      onClick={() => { setIsDrawerOpen(false); setCurrentView('blog'); }}
+                      onClick={() => {
+                        setIsDrawerOpen(false);
+                        setCurrentView('blog');
+                      }}
                       className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                     >
                       <Home size={18} className="mr-3" />
@@ -386,7 +400,10 @@ const App = () => {
                   </li>
                   <li>
                     <button
-                      onClick={() => { setIsDrawerOpen(false); setCurrentView('privacy'); }}
+                      onClick={() => {
+                        setIsDrawerOpen(false);
+                        setCurrentView('privacy');
+                      }}
                       className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                     >
                       <Shield size={18} className="mr-3" />
@@ -395,7 +412,10 @@ const App = () => {
                   </li>
                   <li>
                     <button
-                      onClick={() => { setIsDrawerOpen(false); setCurrentView('terms'); }}
+                      onClick={() => {
+                        setIsDrawerOpen(false);
+                        setCurrentView('terms');
+                      }}
                       className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                     >
                       <FileText size={18} className="mr-3" />
@@ -407,8 +427,6 @@ const App = () => {
             </div>
           </div>
         </>
-
-
       </div>
     </div>
   );
@@ -421,7 +439,7 @@ Post.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    createdAt: PropTypes.instanceOf(Date)
+    createdAt: PropTypes.instanceOf(Date),
   }).isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,

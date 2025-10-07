@@ -6,7 +6,7 @@ const postsCollection = collection(db, 'posts');
 
 export const fetchPosts = async () => {
   const snapshot = await getDocs(postsCollection);
-  return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 };
 
 export const createPost = async (post) => {

@@ -35,7 +35,9 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
         required
       />
       <button type="submit">Save</button>
-      <button type="button" onClick={onCancel}>Cancel</button>
+      <button type="button" onClick={onCancel}>
+        Cancel
+      </button>
     </form>
   );
 };

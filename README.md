@@ -22,8 +22,8 @@ A modern, real-time blog platform built with React, Firebase, and Tailwind CSS.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/bniladridas/gravity-blog.git
-   cd gravity-blog
+   git clone <repository-url>
+   cd <project-directory>
    ```
 
 2. Install dependencies:

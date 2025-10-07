@@ -108,6 +108,18 @@ Custom scripts in `scripts/`:
 - `commit-msg`: Git hook to enforce commit message standards (conventional commits, <=60 chars, lowercase)
 - `rewrite_msg.sh`: Script to rewrite commit messages for history cleanup
 
+## Local Development with Firebase Emulator
+
+For secure local testing of Firestore rules without affecting live data:
+
+1. Install Java (required for emulator): `brew install openjdk` (macOS) or download from java.com
+2. Install Firebase CLI: `npm install -g firebase-tools`
+3. Start emulator: `firebase emulators:start`
+4. In another terminal, run `npm start` (app connects to emulator in dev mode)
+5. Access emulator UI at http://localhost:4000 for data inspection
+
+The app automatically uses the emulator in development, live Firebase in production.
+
 ## Git Hooks
 
 The repository uses a commit-msg hook to enforce:

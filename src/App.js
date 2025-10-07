@@ -291,8 +291,10 @@ const App = () => {
         )}
 
         {loading ? (
-          <div className="space-y-6">
-            {[...Array(3)].map((_, i) => (
+          <div>
+            <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">Loading posts...</div>
+            <div className="space-y-6">
+              {[...Array(3)].map((_, i) => (
               <div key={i} className="bg-white dark:bg-gray-800 p-6 animate-pulse">
                 <div className="flex justify-between items-start mb-3">
                   <div className="flex-1">
@@ -311,7 +313,8 @@ const App = () => {
                   <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-4/6"></div>
                 </div>
               </div>
-            ))}
+              ))}
+            </div>
           </div>
         ) : (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

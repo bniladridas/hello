@@ -46,7 +46,7 @@ describe('Hello Blog App', () => {
 
   it('navigates to Privacy Policy page', () => {
     // Navigate to privacy policy page
-    cy.visit('/#/privacy')
+    cy.visit('/privacy')
 
     // Check that Privacy Policy content is visible (confirms navigation worked)
     cy.contains('We are committed to protecting your privacy').should('be.visible')
@@ -54,7 +54,7 @@ describe('Hello Blog App', () => {
 
   it('navigates to Terms of Service page', () => {
     // Navigate to terms of service page
-    cy.visit('/#/terms')
+    cy.visit('/terms')
 
     // Check that Terms of Service content is visible (confirms navigation worked)
     cy.contains('Welcome to our blog').should('be.visible')
@@ -62,13 +62,13 @@ describe('Hello Blog App', () => {
 
   it('navigates back to home from pages', () => {
     // Go to Privacy Policy
-    cy.visit('/#/privacy')
+    cy.visit('/privacy')
 
     // Verify we're on privacy page
     cy.contains('We are committed to protecting your privacy').should('be.visible')
 
     // Go back to home
-    cy.visit('/#/')
+    cy.visit('/')
 
     // Check we're back to blog view
     cy.contains('Hello').should('be.visible')

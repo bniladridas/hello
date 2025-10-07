@@ -5,6 +5,7 @@
 
 set -e  # Exit on any error
 
+clear
 echo "🚀 Running all checks and builds..."
 
 # Check if node_modules exists

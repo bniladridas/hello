@@ -150,6 +150,10 @@ Custom scripts in `scripts/`:
 - `rewrite_msg.sh`: Script to rewrite commit messages for history cleanup
 - `preflight.sh`: Script for preflight checks (also used by `npm run all`)
 
+## Infrastructure
+
+See `infra/` folder for infrastructure-as-code, including Docker setup for local development with Firebase emulator.
+
 ## Local Development with Firebase Emulator
 
 For secure local testing of Firestore rules without affecting live data:

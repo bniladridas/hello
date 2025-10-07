@@ -102,6 +102,14 @@ As a code reviewer, I've assessed the codebase and confirmed the following:
 - **Firebase connection issues**: Verify .env variables and Firestore rules
 - **Styling issues**: Run `npm run build` to ensure Tailwind purging works
 - **Emulator not connecting**: Ensure Java is installed and emulator is started before app
+- **Web page format missing**: Stop dev server, clear cache with `rm -rf node_modules && npm install`, restart with `npm start`
+
+### Troubleshooting
+- **App won't start**: Run `rm -rf node_modules && npm install` to clear cache
+- **Build fails**: Ensure Node.js v16+, check .env file for Firebase config
+- **Firebase connection issues**: Verify .env variables and Firestore rules
+- **Styling issues**: Run `npm run build` to ensure Tailwind purging works
+- **Emulator not connecting**: Ensure Java is installed and emulator is started before app
 
 ## Setup
 

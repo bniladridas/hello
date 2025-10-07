@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { Link, Routes, Route } from 'react-router-dom'
 import { db } from '../../firebase/config'
 import {
   collection,
@@ -194,6 +193,7 @@ const App = () => {
   const [previewPost, setPreviewPost] = useState(null)
   const [isDarkMode, setIsDarkMode] = useState(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [currentView, setCurrentView] = useState('blog')
 
   // Fetch posts from Firebase
   useEffect(() => {
@@ -350,26 +350,27 @@ const App = () => {
               </div>
             </div>
             )
-          : (
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <BlogPage
-                    posts={posts}
-                    currentPost={currentPost}
-                    onSave={handleSavePost}
-                    onCancel={handleCancel}
-                    onEdit={handleEditPost}
-                    onDelete={handleDeletePost}
-                    onPreview={handlePreviewPost}
-                  />
-                }
+          : currentView === 'blog'
+            ? (
+              <BlogPage
+                posts={posts}
+                currentPost={currentPost}
+                onSave={handleSavePost}
+                onCancel={handleCancel}
+                onEdit={handleEditPost}
+                onDelete={handleDeletePost}
+                onPreview={handlePreviewPost}
               />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<TermsOfService />} />
-            </Routes>
-            )}
+              )
+            : currentView === 'privacy'
+              ? (
+                <PrivacyPolicy />
+                )
+              : currentView === 'terms'
+                ? (
+                  <TermsOfService />
+                  )
+                : null}
 
         {previewPost && <PostPreviewModal post={previewPost} onClose={handleClosePreview} />}
 
@@ -394,34 +395,40 @@ const App = () => {
                <nav>
                  <ul className='space-y-2'>
                    <li>
-                     <Link
-                       to="/"
-                       onClick={() => setTimeout(() => setIsDrawerOpen(false), 100)}
+                     <button
+                       onClick={() => {
+                         setCurrentView('blog')
+                         setIsDrawerOpen(false)
+                       }}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <Home size={18} className='mr-3' />
                        Home
-                     </Link>
+                     </button>
                    </li>
                    <li>
-                     <Link
-                       to="/privacy"
-                       onClick={() => setTimeout(() => setIsDrawerOpen(false), 100)}
+                     <button
+                       onClick={() => {
+                         setCurrentView('privacy')
+                         setIsDrawerOpen(false)
+                       }}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <Shield size={18} className='mr-3' />
                        Privacy Policy
-                     </Link>
+                     </button>
                    </li>
                    <li>
-                     <Link
-                       to="/terms"
-                       onClick={() => setTimeout(() => setIsDrawerOpen(false), 100)}
+                     <button
+                       onClick={() => {
+                         setCurrentView('terms')
+                         setIsDrawerOpen(false)
+                       }}
                        className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
                      >
                        <FileText size={18} className='mr-3' />
                        Terms of Service
-                     </Link>
+                     </button>
                    </li>
                  </ul>
                </nav>

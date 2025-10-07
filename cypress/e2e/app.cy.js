@@ -52,10 +52,7 @@ describe('Hello Blog App', () => {
     cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
 
     // Click Privacy Policy in drawer
-    cy.get('.fixed.top-0.left-0 a').contains('Privacy Policy').click()
-
-    // Close drawer
-    cy.get('[aria-label="Close menu"]').click()
+    cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
 
     // Check that Privacy Policy content is visible (confirms navigation worked)
     cy.contains('We are committed to protecting your privacy').should('be.visible')
@@ -69,10 +66,7 @@ describe('Hello Blog App', () => {
     cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
 
     // Click Terms of Service in drawer
-    cy.get('.fixed.top-0.left-0 a').contains('Terms of Service').click()
-
-    // Close drawer
-    cy.get('[aria-label="Close menu"]').click()
+    cy.get('.fixed.top-0.left-0').contains('Terms of Service').click()
 
     // Check that Terms of Service content is visible (confirms navigation worked)
     cy.contains('Welcome to our blog').should('be.visible')
@@ -80,22 +74,17 @@ describe('Hello Blog App', () => {
 
   it('navigates back to home from pages', () => {
     // Go to Privacy Policy
-    cy.visit('/privacy')
+    cy.get('[aria-label="Open menu"]').click()
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
+    cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
 
     // Verify we're on privacy page
     cy.contains('We are committed to protecting your privacy').should('be.visible')
 
-    // Open drawer
+    // Go back to home
     cy.get('[aria-label="Open menu"]').click()
-
-    // Wait for drawer to open
     cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
-
-    // Click Home in drawer
-    cy.get('.fixed.top-0.left-0 a').contains('Home').click()
-
-    // Close drawer
-    cy.get('[aria-label="Close menu"]').click()
+    cy.get('.fixed.top-0.left-0').contains('Home').click()
 
     // Check we're back to blog view
     cy.contains('Hello').should('be.visible')

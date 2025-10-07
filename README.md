@@ -248,6 +248,12 @@ The repository uses a commit-msg hook to enforce:
 
 **Activation:** The hook is active in `.git/hooks/commit-msg`. All commits are validated automatically.
 
+To activate locally (for contributors):
+```bash
+cp scripts_custom/commit-msg .git/hooks/commit-msg
+chmod +x .git/hooks/commit-msg
+```
+
 ## Usage
 
 - View posts on the home page

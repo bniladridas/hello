@@ -32,11 +32,23 @@ A modern, real-time blog platform built with React, Firebase, and Tailwind CSS.
    ```
 
 3. Set up Firebase:
-   - Go to [Firebase Console](https://console.firebase.google.com)
-   - Create a new project
-   - Enable Firestore Database (start in test mode)
-   - In Project settings > General > Your apps, add a web app
-   - Copy the Firebase config and create a `.env` file in the root directory:
+    - Go to [Firebase Console](https://console.firebase.google.com)
+    - Create a new project
+    - Enable Firestore Database
+    - Go to Firestore > Rules and update to allow public access:
+      ```
+      rules_version = '2';
+      service cloud.firestore {
+        match /databases/{database}/documents {
+          match /{document=**} {
+            allow read, write: if true;
+          }
+        }
+      }
+      ```
+      **Warning:** These rules allow public read/write access, suitable for demos but insecure for production. For real apps, implement authentication and restrict to `request.auth != null`.
+    - In Project settings > General > Your apps, add a web app
+    - Copy the Firebase config and create a `.env` file in the root directory:
      ```
      REACT_APP_FIREBASE_API_KEY=your_api_key
      REACT_APP_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com

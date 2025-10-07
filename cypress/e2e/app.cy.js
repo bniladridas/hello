@@ -1,10 +1,12 @@
 describe('Hello Blog App', () => {
   beforeEach(() => {
     cy.visit('/')
+    // Wait for app to load
+    cy.contains('Hello').should('be.visible')
   })
 
   it('displays the main title', () => {
-    cy.contains('Hello').should('be.visible')
+    // Already checked in beforeEach
   })
 
   it('toggles dark mode', () => {
@@ -43,37 +45,55 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates to Privacy Policy page', () => {
+    // Wait for any loading to complete
+    cy.get('body').should('not.contain', 'Loading posts...')
+
     // Open drawer
     cy.get('[aria-label="Open menu"]').click()
 
-    // Click Privacy Policy
-    cy.contains('Privacy Policy').click()
+    // Wait for drawer to open
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
 
-    // Check that Privacy Policy content is displayed
-    cy.contains('Privacy Policy').should('be.visible')
-    cy.contains('Last updated').should('be.visible')
+    // Click Privacy Policy in drawer
+    cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
+
+    // Wait for navigation and check content
+    cy.contains('We are committed to protecting your privacy').should('be.visible')
   })
 
   it('navigates to Terms of Service page', () => {
+    // Wait for any loading to complete
+    cy.get('body').should('not.contain', 'Loading posts...')
+
     // Open drawer
     cy.get('[aria-label="Open menu"]').click()
 
-    // Click Terms of Service
-    cy.contains('Terms of Service').click()
+    // Wait for drawer to open
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
 
-    // Check that Terms of Service content is displayed
-    cy.contains('Terms of Service').should('be.visible')
-    cy.contains('Last updated').should('be.visible')
+    // Click Terms of Service in drawer
+    cy.get('.fixed.top-0.left-0').contains('Terms of Service').click()
+
+    // Wait for navigation and check content
+    cy.contains('Welcome to our blog').should('be.visible')
   })
 
   it('navigates back to home from pages', () => {
+    // Wait for any loading to complete
+    cy.get('body').should('not.contain', 'Loading posts...')
+
     // Go to Privacy Policy
     cy.get('[aria-label="Open menu"]').click()
-    cy.contains('Privacy Policy').click()
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
+    cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
+
+    // Verify we're on privacy page
+    cy.contains('We are committed to protecting your privacy').should('be.visible')
 
     // Go back to home
     cy.get('[aria-label="Open menu"]').click()
-    cy.contains('Home').click()
+    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
+    cy.get('.fixed.top-0.left-0').contains('Home').click()
 
     // Check we're back to blog view
     cy.contains('Hello').should('be.visible')

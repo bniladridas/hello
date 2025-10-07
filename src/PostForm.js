@@ -1,23 +1,23 @@
 // src/PostForm.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 
 const PostForm = ({ currentPost, onSave, onCancel }) => {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
 
   useEffect(() => {
     if (currentPost) {
-      setTitle(currentPost.title);
-      setContent(currentPost.content);
+      setTitle(currentPost.title)
+      setContent(currentPost.content)
     }
-  }, [currentPost]);
+  }, [currentPost])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave({ title, content });
-    setTitle('');
-    setContent('');
-  };
+    e.preventDefault()
+    onSave({ title, content })
+    setTitle('')
+    setContent('')
+  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -39,7 +39,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
         Cancel
       </button>
     </form>
-  );
-};
+  )
+}
 
-export default PostForm;
+export default PostForm

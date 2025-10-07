@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const TermsOfService = () => {
   return (
@@ -45,7 +45,7 @@ const TermsOfService = () => {
         tolerated.
       </p>
     </div>
-  );
-};
+  )
+}
 
-export default TermsOfService;
+export default TermsOfService

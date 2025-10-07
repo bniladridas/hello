@@ -1,6 +1,6 @@
 // src/Footer.js
-import React from 'react';
-import { LinkedIn } from 'lucide-react';
+import React from 'react'
+import { LinkedIn } from 'lucide-react'
 
 const Footer = () => {
   return (
@@ -18,7 +18,7 @@ const Footer = () => {
         </a>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

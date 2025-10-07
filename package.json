@@ -18,10 +18,13 @@
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "autoprefixer": "^10.4.16",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.6.0",
+    "eslint-plugin-react": "^7.37.2",
     "postcss": "^8.4.31",
-    "prettier": "^3.3.3",
     "tailwindcss": "^3.3.5"
   },
   "scripts": {
@@ -31,17 +34,24 @@
     "test:coverage": "react-scripts test --coverage --watchAll=false",
     "lint": "eslint src --ext .js,.jsx",
     "lint:fix": "eslint src --ext .js,.jsx --fix",
-    "format": "prettier --write src/**/*.{js,jsx,json,css,md}",
-    "format:check": "prettier --check src/**/*.{js,jsx,json,css,md}",
     "preflight": "bash scripts/preflight.sh",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest",
-      "plugin:prettier/recommended"
-    ]
+      "standard"
+    ],
+    "env": {
+      "jest": true
+    },
+    "plugins": [
+      "react"
+    ],
+    "rules": {
+      "react/jsx-uses-react": "error",
+      "react/jsx-uses-vars": "error",
+      "n/handle-callback-err": "off"
+    }
   },
   "browserslist": {
     "production": [

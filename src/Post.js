@@ -1,5 +1,5 @@
 // src/Post.js
-import React from 'react';
+import React from 'react'
 
 const Post = ({ post, onEdit, onDelete }) => {
   return (
@@ -9,7 +9,7 @@ const Post = ({ post, onEdit, onDelete }) => {
       <button onClick={() => onEdit(post.id)}>Edit</button>
       <button onClick={() => onDelete(post.id)}>Delete</button>
     </div>
-  );
-};
+  )
+}
 
-export default Post;
+export default Post

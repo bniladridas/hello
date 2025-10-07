@@ -20,6 +20,7 @@ A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 - **Lucide React**: Icons library for consistent, scalable SVG icons that match the design system.
 - **PropTypes**: Added for runtime type checking in development, improving code reliability.
 - **Create React App (react-scripts)**: Bootstrapped the project for quick setup with built-in tooling (webpack, Babel, ESLint).
+- **JavaScript Standard Style**: Enforces strict, consistent code style with no semicolons, single quotes, and automatic formatting. Promotes clean, readable code without configuration.
 
 ## Current State & Maintenance
 
@@ -33,6 +34,7 @@ A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 - Monitor Firebase usage and costs
 - Test Firestore rules in emulator before production
 - Keep Node.js updated (currently supports v16+)
+- Run `npm run lint:fix` to auto-format code per Standard JS
 
 ### Troubleshooting
 - **App won't start**: Run `rm -rf node_modules && npm install` to clear cache

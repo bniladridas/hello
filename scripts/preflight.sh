@@ -13,11 +13,7 @@ if [ ! -d "node_modules" ]; then
     exit 1
 fi
 
-# Check formatting
-echo "📝 Checking code formatting..."
-npm run format:check
-
-# Run linting
+# Run linting (includes formatting checks)
 echo "🔍 Running ESLint..."
 npm run lint
 

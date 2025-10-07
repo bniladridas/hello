@@ -1,6 +1,6 @@
 // src/BlogList.js
-import React from 'react';
-import Post from './Post';
+import React from 'react'
+import Post from './Post'
 
 const BlogList = ({ posts, onEdit, onDelete }) => {
   return (
@@ -9,7 +9,7 @@ const BlogList = ({ posts, onEdit, onDelete }) => {
         <Post key={post.id} post={post} onEdit={onEdit} onDelete={onDelete} />
       ))}
     </div>
-  );
-};
+  )
+}
 
-export default BlogList;
+export default BlogList

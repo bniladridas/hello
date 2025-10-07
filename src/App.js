@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { db } from './firebase/config';
+import React, { useState, useEffect } from 'react'
+import { db } from './firebase/config'
 import {
   collection,
   onSnapshot,
@@ -8,13 +8,13 @@ import {
   addDoc,
   deleteDoc,
   limit,
-  query,
-} from 'firebase/firestore';
-import { Pencil, Trash, Eye, X, Menu, Home, FileText, Shield } from 'lucide-react';
+  query
+} from 'firebase/firestore'
+import { Pencil, Trash, Eye, X, Menu, Home, FileText, Shield } from 'lucide-react'
 
-import PropTypes from 'prop-types';
-import PrivacyPolicy from './PrivacyPolicy';
-import TermsOfService from './TermsOfService';
+import PropTypes from 'prop-types'
+import PrivacyPolicy from './PrivacyPolicy'
+import TermsOfService from './TermsOfService'
 
 // Post Component
 const Post = ({ post, onEdit, onDelete, onPreview }) => {
@@ -52,27 +52,27 @@ const Post = ({ post, onEdit, onDelete, onPreview }) => {
         {post.content}
       </p>
     </div>
-  );
-};
+  )
+}
 
 // Post Form Component
 const PostForm = ({ currentPost, onSave, onCancel }) => {
-  const [title, setTitle] = useState(currentPost?.title || '');
-  const [content, setContent] = useState(currentPost?.content || '');
+  const [title, setTitle] = useState(currentPost?.title || '')
+  const [content, setContent] = useState(currentPost?.content || '')
 
   useEffect(() => {
     if (currentPost) {
-      setTitle(currentPost.title);
-      setContent(currentPost.content);
+      setTitle(currentPost.title)
+      setContent(currentPost.content)
     }
-  }, [currentPost]);
+  }, [currentPost])
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    onSave({ title, content });
-    setTitle('');
-    setContent('');
-  };
+    e.preventDefault()
+    onSave({ title, content })
+    setTitle('')
+    setContent('')
+  }
 
   return (
     <div className="bg-white dark:bg-gray-800 p-6">
@@ -119,17 +119,19 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
         </div>
       </form>
     </div>
-  );
-};
+  )
+}
 
 // Blog List Component
 const BlogList = ({ posts, onEdit, onDelete, onPreview }) => {
   return (
     <div className="blog-list">
-      {posts.length === 0 ? (
+      {posts.length === 0
+        ? (
         <p className="text-gray-500 dark:text-gray-400">No posts yet. Start writing!</p>
-      ) : (
-        posts.map((post) => (
+          )
+        : (
+            posts.map((post) => (
           <Post
             key={post.id}
             post={post}
@@ -137,22 +139,22 @@ const BlogList = ({ posts, onEdit, onDelete, onPreview }) => {
             onDelete={onDelete}
             onPreview={onPreview}
           />
-        ))
-      )}
+            ))
+          )}
     </div>
-  );
-};
+  )
+}
 
 // Post Preview Modal Component
 const PostPreviewModal = ({ post, onClose }) => {
   useEffect(() => {
     const handleEscape = (e) => {
-      if (e.key === 'Escape') onClose();
-    };
+      if (e.key === 'Escape') onClose()
+    }
 
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
-  }, [onClose]);
+    document.addEventListener('keydown', handleEscape)
+    return () => document.removeEventListener('keydown', handleEscape)
+  }, [onClose])
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -176,120 +178,120 @@ const PostPreviewModal = ({ post, onClose }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // Main App Component
 const App = () => {
-  const [posts, setPosts] = useState([]);
-  const [currentPost, setCurrentPost] = useState(null);
-  const [editingId, setEditingId] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
-  const [previewPost, setPreviewPost] = useState(null);
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [currentView, setCurrentView] = useState('blog');
+  const [posts, setPosts] = useState([])
+  const [currentPost, setCurrentPost] = useState(null)
+  const [editingId, setEditingId] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
+  const [previewPost, setPreviewPost] = useState(null)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [currentView, setCurrentView] = useState('blog')
 
   // Fetch posts from Firebase
   useEffect(() => {
-    const q = query(collection(db, 'posts'), limit(40));
+    const q = query(collection(db, 'posts'), limit(40))
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {
         const fetchedPosts = querySnapshot.docs.map((doc) => ({
           id: doc.id,
-          ...doc.data(),
-        }));
-        setPosts(fetchedPosts);
-        setLoading(false);
-        setError('');
+          ...doc.data()
+        }))
+        setPosts(fetchedPosts)
+        setLoading(false)
+        setError('')
       },
       (error) => {
-        setError('Failed to fetch posts.');
-        setLoading(false);
+        setError('Failed to fetch posts.')
+        setLoading(false)
       }
-    );
+    )
 
-    return () => unsubscribe();
-  }, []);
+    return () => unsubscribe()
+  }, [])
 
   // Handle dark mode
   useEffect(() => {
     if (isDarkMode) {
-      document.documentElement.classList.add('dark');
+      document.documentElement.classList.add('dark')
     } else {
-      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.remove('dark')
     }
-  }, [isDarkMode]);
+  }, [isDarkMode])
 
   const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
+    setIsDarkMode(!isDarkMode)
+  }
 
   const handleSavePost = async (post) => {
     if (post.title.trim() === '' || post.content.trim() === '') {
-      setError('Title and content are required.');
-      return;
+      setError('Title and content are required.')
+      return
     }
 
     try {
       if (editingId) {
-        const postRef = doc(db, 'posts', editingId);
+        const postRef = doc(db, 'posts', editingId)
         await updateDoc(postRef, {
           title: post.title,
           content: post.content,
-          updatedAt: new Date(),
-        });
+          updatedAt: new Date()
+        })
       } else {
         await addDoc(collection(db, 'posts'), {
           title: post.title,
           content: post.content,
           createdAt: new Date(),
-          updatedAt: new Date(),
-        });
+          updatedAt: new Date()
+        })
       }
-      setError('');
-      setCurrentPost(null);
-      setEditingId(null);
+      setError('')
+      setCurrentPost(null)
+      setEditingId(null)
     } catch (error) {
-      setError('Failed to save post.');
+      setError('Failed to save post.')
     }
-  };
+  }
 
   const handleDeletePost = async (id) => {
     if (window.confirm('Are you sure you want to delete this post?')) {
       try {
-        await deleteDoc(doc(db, 'posts', id));
-        setError('');
+        await deleteDoc(doc(db, 'posts', id))
+        setError('')
       } catch (error) {
-        setError('Failed to delete post.');
+        setError('Failed to delete post.')
       }
     }
-  };
+  }
 
   const handleEditPost = (id) => {
-    const post = posts.find((post) => post.id === id);
+    const post = posts.find((post) => post.id === id)
     if (post) {
-      setCurrentPost(post);
-      setEditingId(id);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      setCurrentPost(post)
+      setEditingId(id)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-  };
+  }
 
   const handleCancel = () => {
-    setCurrentPost(null);
-    setEditingId(null);
-    setError('');
-  };
+    setCurrentPost(null)
+    setEditingId(null)
+    setError('')
+  }
 
   const handlePreviewPost = (post) => {
-    setPreviewPost(post);
-  };
+    setPreviewPost(post)
+  }
 
   const handleClosePreview = () => {
-    setPreviewPost(null);
-  };
+    setPreviewPost(null)
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors">
@@ -318,7 +320,8 @@ const App = () => {
 
         {error && <div className="mb-6 p-4 text-red-700 dark:text-red-300">{error}</div>}
 
-        {loading ? (
+        {loading
+          ? (
           <div>
             <div className="text-sm text-gray-500 dark:text-gray-400 mb-4">Loading posts...</div>
             <div className="space-y-6">
@@ -344,7 +347,9 @@ const App = () => {
               ))}
             </div>
           </div>
-        ) : currentView === 'blog' ? (
+            )
+          : currentView === 'blog'
+            ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
               <PostForm currentPost={currentPost} onSave={handleSavePost} onCancel={handleCancel} />
@@ -358,11 +363,16 @@ const App = () => {
               />
             </div>
           </div>
-        ) : currentView === 'privacy' ? (
+              )
+            : currentView === 'privacy'
+              ? (
           <PrivacyPolicy />
-        ) : currentView === 'terms' ? (
+                )
+              : currentView === 'terms'
+                ? (
           <TermsOfService />
-        ) : null}
+                  )
+                : null}
 
         {previewPost && <PostPreviewModal post={previewPost} onClose={handleClosePreview} />}
 
@@ -389,8 +399,8 @@ const App = () => {
                   <li>
                     <button
                       onClick={() => {
-                        setIsDrawerOpen(false);
-                        setCurrentView('blog');
+                        setIsDrawerOpen(false)
+                        setCurrentView('blog')
                       }}
                       className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                     >
@@ -401,8 +411,8 @@ const App = () => {
                   <li>
                     <button
                       onClick={() => {
-                        setIsDrawerOpen(false);
-                        setCurrentView('privacy');
+                        setIsDrawerOpen(false)
+                        setCurrentView('privacy')
                       }}
                       className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                     >
@@ -413,8 +423,8 @@ const App = () => {
                   <li>
                     <button
                       onClick={() => {
-                        setIsDrawerOpen(false);
-                        setCurrentView('terms');
+                        setIsDrawerOpen(false)
+                        setCurrentView('terms')
                       }}
                       className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
                     >
@@ -429,8 +439,8 @@ const App = () => {
         </>
       </div>
     </div>
-  );
-};
+  )
+}
 
 // PropTypes definitions
 
@@ -439,41 +449,41 @@ Post.propTypes = {
     id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
-    createdAt: PropTypes.instanceOf(Date),
+    createdAt: PropTypes.instanceOf(Date)
   }).isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onPreview: PropTypes.func.isRequired,
-};
+  onPreview: PropTypes.func.isRequired
+}
 
 PostPreviewModal.propTypes = {
   post: PropTypes.shape({
     title: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
   }).isRequired,
-  onClose: PropTypes.func.isRequired,
-};
+  onClose: PropTypes.func.isRequired
+}
 
 BlogList.propTypes = {
   posts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired
     })
   ).isRequired,
   onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
-  onPreview: PropTypes.func.isRequired,
-};
+  onPreview: PropTypes.func.isRequired
+}
 
 PostForm.propTypes = {
   currentPost: PropTypes.shape({
     title: PropTypes.string,
-    content: PropTypes.string,
+    content: PropTypes.string
   }),
   onSave: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-};
+  onCancel: PropTypes.func.isRequired
+}
 
-export default App;
+export default App

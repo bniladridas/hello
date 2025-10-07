@@ -27,7 +27,7 @@ A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 The project now includes comprehensive unit tests (42.76% coverage), E2E tests with Cypress, and CI/CD pipelines for automated testing and building.
 
 ### Known Issues
-- **NPM Vulnerabilities**: 9 vulnerabilities (3 moderate, 6 high) related to dependencies like nth-check, postcss, webpack-dev-server. These are in dev dependencies and don't affect production builds. Avoid `npm audit fix --force` as it downgrades react-scripts to 0.0.0, breaking the app.
+- **NPM Vulnerabilities**: 8 vulnerabilities (3 moderate, 5 high) related to dependencies like nth-check, postcss, webpack-dev-server. These are in dev dependencies and don't affect production builds. Avoid `npm audit fix --force` as it downgrades react-scripts to 0.0.0, breaking the app.
 - **Deprecated Dependencies**: Some Babel plugins are deprecated but functional. Update when possible.
 - **Node.js Deprecation Warnings**: fs.F_OK and webpack dev server middleware warnings are harmless but indicate outdated tooling.
 

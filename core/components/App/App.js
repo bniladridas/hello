@@ -8,7 +8,8 @@ import {
   addDoc,
   deleteDoc,
   limit,
-  query
+  query,
+  orderBy
 } from 'firebase/firestore'
 import { Pencil, Trash, Eye, X, Menu, Home, FileText, Shield } from 'lucide-react'
 
@@ -195,7 +196,7 @@ const App = () => {
 
   // Fetch posts from Firebase
   useEffect(() => {
-    const q = query(collection(db, 'posts'), limit(40))
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'), limit(40))
     const unsubscribe = onSnapshot(
       q,
       (querySnapshot) => {

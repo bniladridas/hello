@@ -10,35 +10,30 @@ import PropTypes from 'prop-types';
 // Post Component
 const Post = ({ post, onEdit, onDelete, onPreview }) => {
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 mb-6 hover:border-gray-300 dark:hover:border-gray-600 transition-colors">
+    <div className="bg-white dark:bg-gray-800 p-6 mb-6">
       <div className="flex justify-between items-start mb-3">
-        <div className="flex-1 min-w-0">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white truncate">{post.title}</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            {new Date(post.createdAt?.toDate?.() || new Date()).toLocaleDateString()}
-          </p>
-        </div>
+        <h3 className="text-lg font-medium text-gray-900 dark:text-white flex-1">{post.title}</h3>
         <div className="flex space-x-1 ml-4">
           <button
             onClick={() => onPreview(post)}
-            className="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             aria-label={`Preview ${post.title}`}
           >
-            <Eye size={18} />
+            <Eye size={16} />
           </button>
           <button
             onClick={() => onEdit(post.id)}
-            className="p-2 text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             aria-label={`Edit ${post.title}`}
           >
-            <Pencil size={18} />
+            <Pencil size={16} />
           </button>
           <button
             onClick={() => onDelete(post.id)}
-            className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
+            className="p-1 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
             aria-label={`Delete ${post.title}`}
           >
-            <Trash size={18} />
+            <Trash size={16} />
           </button>
         </div>
       </div>
@@ -67,10 +62,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
-      <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">
-        {currentPost ? 'Edit Post' : 'New Post'}
-      </h3>
+    <div className="bg-white dark:bg-gray-800 p-6">
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <input
@@ -78,7 +70,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Post title"
-            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-sm"
+            className="w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-gray-600 dark:focus:border-gray-400 text-gray-900 dark:text-white text-lg font-medium"
             required
             aria-label="Post Title"
           />
@@ -87,18 +79,18 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your post content here..."
-            className="w-full min-h-[120px] px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-sm resize-none"
+            placeholder="Write your post..."
+            className="w-full min-h-[120px] px-0 py-2 bg-transparent border-0 focus:outline-none focus:ring-0 text-gray-700 dark:text-gray-300 text-sm resize-none"
             required
             aria-label="Post Content"
           />
         </div>
-        <div className="flex justify-end space-x-3">
+        <div className="flex justify-end">
           {currentPost && (
             <button
               type="button"
               onClick={onCancel}
-              className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+              className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200"
               aria-label="Cancel"
             >
               Cancel
@@ -106,7 +98,7 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
           )}
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            className="px-4 py-2 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm hover:bg-gray-800 dark:hover:bg-gray-100"
             aria-label="Save Post"
           >
             {currentPost ? 'Update' : 'Publish'}
@@ -287,12 +279,9 @@ const App = () => {
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
         <header className="mb-12 pb-6">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-3">
-              <Globe className="text-blue-600 dark:text-blue-400" size={32} />
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                Hello
-              </h1>
-            </div>
+            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+              Hello
+            </h1>
             <ToggleSwitch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
           </div>
 
@@ -300,7 +289,7 @@ const App = () => {
         </header>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-md border border-red-200 dark:border-red-800">
+          <div className="mb-6 p-4 text-red-700 dark:text-red-300">
             {error}
           </div>
         )}
@@ -319,9 +308,6 @@ const App = () => {
               />
             </div>
             <div className="lg:col-span-2">
-              <h2 className="text-lg font-medium mb-6 text-gray-900 dark:text-white">
-                Posts
-              </h2>
               <BlogList
                 posts={posts}
                 onEdit={handleEditPost}

@@ -21,6 +21,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
+        file: infra/Dockerfile
         push: false
         tags: hello:latest
         cache-from: type=gha

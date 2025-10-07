@@ -14,6 +14,7 @@ import {
 import { Pencil, Trash, Eye, X, Menu, Home, FileText, Shield } from 'lucide-react'
 
 import PropTypes from 'prop-types'
+import BlogPage from './BlogPage'
 import PrivacyPolicy from '../../pages/PrivacyPolicy'
 import TermsOfService from '../../pages/TermsOfService'
 
@@ -349,33 +350,63 @@ const App = () => {
               </div>
             </div>
             )
-          : currentView === 'blog'
-            ? (
-              <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-                <div className='lg:col-span-1'>
-                  <PostForm currentPost={currentPost} onSave={handleSavePost} onCancel={handleCancel} />
-                </div>
-                <div className='lg:col-span-2'>
-                  <BlogList
-                    posts={posts}
-                    onEdit={handleEditPost}
-                    onDelete={handleDeletePost}
-                    onPreview={handlePreviewPost}
-                  />
-                </div>
-              </div>
-              )
-            : currentView === 'privacy'
-              ? (
-                <PrivacyPolicy />
-                )
-              : currentView === 'terms'
-                ? (
-                  <TermsOfService />
-                  )
-                : null}
+          : (
+            <BlogPage
+              posts={posts}
+              currentPost={currentPost}
+              onSave={handleSavePost}
+              onCancel={handleCancel}
+              onEdit={handleEditPost}
+              onDelete={handleDeletePost}
+              onPreview={handlePreviewPost}
+            />
+            )}
 
         {previewPost && <PostPreviewModal post={previewPost} onClose={handleClosePreview} />}
+
+        {currentView === 'privacy' && (
+          <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4'>
+            <div className='bg-white dark:bg-gray-800 w-full max-w-2xl max-h-[90vh] overflow-hidden'>
+              <div className='p-6 border-b border-gray-200 dark:border-gray-700'>
+                <div className='flex justify-between items-start'>
+                  <h2 className='text-xl font-medium text-gray-900 dark:text-white pr-4'>Privacy Policy</h2>
+                  <button
+                    onClick={() => setCurrentView('blog')}
+                    className='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors'
+                    aria-label='Close'
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+              <div className='p-6 overflow-y-auto max-h-[60vh]'>
+                <PrivacyPolicy />
+              </div>
+            </div>
+          </div>
+        )}
+
+        {currentView === 'terms' && (
+          <div className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4'>
+            <div className='bg-white dark:bg-gray-800 w-full max-w-2xl max-h-[90vh] overflow-hidden'>
+              <div className='p-6 border-b border-gray-200 dark:border-gray-700'>
+                <div className='flex justify-between items-start'>
+                  <h2 className='text-xl font-medium text-gray-900 dark:text-white pr-4'>Terms of Service</h2>
+                  <button
+                    onClick={() => setCurrentView('blog')}
+                    className='p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors'
+                    aria-label='Close'
+                  >
+                    <X size={20} />
+                  </button>
+                </div>
+              </div>
+              <div className='p-6 overflow-y-auto max-h-[60vh]'>
+                <TermsOfService />
+              </div>
+            </div>
+          </div>
+        )}
 
         <>
           {isDrawerOpen && (
@@ -395,46 +426,46 @@ const App = () => {
               >
                 <X size={20} />
               </button>
-              <nav>
-                <ul className='space-y-2'>
-                  <li>
-                    <button
-                      onClick={() => {
-                        setIsDrawerOpen(false)
-                        setCurrentView('blog')
-                      }}
-                      className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
-                    >
-                      <Home size={18} className='mr-3' />
-                      Home
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => {
-                        setIsDrawerOpen(false)
-                        setCurrentView('privacy')
-                      }}
-                      className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
-                    >
-                      <Shield size={18} className='mr-3' />
-                      Privacy Policy
-                    </button>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => {
-                        setIsDrawerOpen(false)
-                        setCurrentView('terms')
-                      }}
-                      className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
-                    >
-                      <FileText size={18} className='mr-3' />
-                      Terms of Service
-                    </button>
-                  </li>
-                </ul>
-              </nav>
+               <nav>
+                 <ul className='space-y-2'>
+                   <li>
+                     <button
+                       onClick={() => {
+                         setCurrentView('blog')
+                         setIsDrawerOpen(false)
+                       }}
+                       className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
+                     >
+                       <Home size={18} className='mr-3' />
+                       Home
+                     </button>
+                   </li>
+                   <li>
+                     <button
+                       onClick={() => {
+                         setCurrentView('privacy')
+                         setIsDrawerOpen(false)
+                       }}
+                       className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
+                     >
+                       <Shield size={18} className='mr-3' />
+                       Privacy Policy
+                     </button>
+                   </li>
+                   <li>
+                     <button
+                       onClick={() => {
+                         setCurrentView('terms')
+                         setIsDrawerOpen(false)
+                       }}
+                       className='flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left'
+                     >
+                       <FileText size={18} className='mr-3' />
+                       Terms of Service
+                     </button>
+                   </li>
+                 </ul>
+               </nav>
             </div>
           </div>
         </>

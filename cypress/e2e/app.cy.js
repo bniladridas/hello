@@ -45,8 +45,8 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates to Privacy Policy page', () => {
-    // Wait for app to be ready (no loading state)
-    cy.get('body').should('not.contain', 'Loading posts...')
+    // Wait for app to be ready (blog content should be visible)
+    cy.get('input[placeholder="Post title"]').should('be.visible')
 
     // Open drawer
     cy.get('[aria-label="Open menu"]').click()
@@ -65,8 +65,8 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates to Terms of Service page', () => {
-    // Wait for app to be ready (no loading state)
-    cy.get('body').should('not.contain', 'Loading posts...')
+    // Wait for app to be ready (blog content should be visible)
+    cy.get('input[placeholder="Post title"]').should('be.visible')
 
     // Open drawer
     cy.get('[aria-label="Open menu"]').click()
@@ -85,8 +85,8 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates back to home from pages', () => {
-    // Wait for app to be ready (no loading state)
-    cy.get('body').should('not.contain', 'Loading posts...')
+    // Wait for app to be ready (blog content should be visible)
+    cy.get('input[placeholder="Post title"]').should('be.visible')
 
     // Go to Privacy Policy
     cy.get('[aria-label="Open menu"]').click()

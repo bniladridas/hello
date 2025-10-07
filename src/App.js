@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { db } from './firebase/config';
 import { collection, onSnapshot, doc, updateDoc, addDoc, deleteDoc, limit, query } from 'firebase/firestore';
-import { Pencil, Trash, Eye, X } from 'lucide-react';
+import { Pencil, Trash, Eye, X, Menu, Home, FileText, Shield } from 'lucide-react';
 
 import PropTypes from 'prop-types';
+import PrivacyPolicy from './PrivacyPolicy';
+import TermsOfService from './TermsOfService';
 
 
 
@@ -137,7 +139,7 @@ const PostPreviewModal = ({ post, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden">
+      <div className="bg-white dark:bg-gray-800 w-full max-w-2xl max-h-[90vh] overflow-hidden">
         <div className="p-6 border-b border-gray-200 dark:border-gray-700">
           <div className="flex justify-between items-start">
             <h2 className="text-xl font-medium text-gray-900 dark:text-white pr-4">{post.title}</h2>
@@ -167,6 +169,8 @@ const App = () => {
   const [error, setError] = useState('');
   const [previewPost, setPreviewPost] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [currentView, setCurrentView] = useState('blog');
 
   // Fetch posts from Firebase
   useEffect(() => {
@@ -269,9 +273,18 @@ const App = () => {
       <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
         <header className="mb-12 pb-6">
           <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
-              Hello
-            </h1>
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setIsDrawerOpen(true)}
+                className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                aria-label="Open menu"
+              >
+                <Menu size={20} />
+              </button>
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                Hello
+              </h1>
+            </div>
             <button
               onClick={toggleDarkMode}
               className="text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
@@ -316,7 +329,7 @@ const App = () => {
               ))}
             </div>
           </div>
-        ) : (
+        ) : currentView === 'blog' ? (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div className="lg:col-span-1">
               <PostForm
@@ -334,16 +347,66 @@ const App = () => {
               />
             </div>
           </div>
-        )}
+        ) : currentView === 'privacy' ? (
+          <PrivacyPolicy />
+        ) : currentView === 'terms' ? (
+          <TermsOfService />
+        ) : null}
 
 
 
         {previewPost && (
-          <PostPreviewModal 
-            post={previewPost} 
-            onClose={handleClosePreview} 
+          <PostPreviewModal
+            post={previewPost}
+            onClose={handleClosePreview}
           />
         )}
+
+        <>
+          {isDrawerOpen && <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setIsDrawerOpen(false)}></div>}
+          <div className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-gray-700 shadow-lg z-50 transform transition-transform duration-300 ease-in-out ${isDrawerOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className="p-4">
+              <button
+                onClick={() => setIsDrawerOpen(false)}
+                className="mb-4 p-2 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100"
+                aria-label="Close menu"
+              >
+                <X size={20} />
+              </button>
+              <nav>
+                <ul className="space-y-2">
+                  <li>
+                    <button
+                      onClick={() => { setIsDrawerOpen(false); setCurrentView('blog'); }}
+                      className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                    >
+                      <Home size={18} className="mr-3" />
+                      Home
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => { setIsDrawerOpen(false); setCurrentView('privacy'); }}
+                      className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                    >
+                      <Shield size={18} className="mr-3" />
+                      Privacy Policy
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => { setIsDrawerOpen(false); setCurrentView('terms'); }}
+                      className="flex items-center p-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 w-full text-left"
+                    >
+                      <FileText size={18} className="mr-3" />
+                      Terms of Service
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </>
 
 
       </div>

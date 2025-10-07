@@ -7,6 +7,7 @@ A modern, real-time blog platform built with React, Firebase, and Tailwind CSS.
 - Real-time post updates with Firebase Firestore
 - Responsive design with Tailwind CSS
 - Dark mode toggle
+- Navigation drawer for easy access to different sections
 - Single-page application
 - Post creation, editing, deletion, and preview
 - Clean, minimal UI

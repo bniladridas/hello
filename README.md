@@ -148,8 +148,7 @@ Your app will be live at your Firebase hosting URL
 Custom scripts in `scripts/`:
 - `commit-msg`: Git hook to enforce commit message standards (conventional commits, <=60 chars, lowercase)
 - `rewrite_msg.sh`: Script to rewrite commit messages for history cleanup
-- `preflight.sh`: Script for preflight checks
-- `all.sh`: Script to run all validations
+- `preflight.sh`: Script for preflight checks (also used by `npm run all`)
 
 ## Local Development with Firebase Emulator
 

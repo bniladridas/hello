@@ -83,8 +83,8 @@
     "lint:fix": "eslint core --ext .js,.jsx --fix",
     "format:check": "eslint core --ext .js,.jsx",
     "format:fix": "eslint core --ext .js,.jsx --fix",
-    "preflight": "bash scripts/preflight.sh",
-    "all": "bash scripts/all.sh",
+    "preflight": "bash scripts_custom/preflight.sh",
+    "all": "bash scripts_custom/preflight.sh",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run"
   },
@@ -118,21 +118,21 @@
   },
   "jest": {
     "roots": [
-      "<rootDir>/src"
+      "<rootDir>/core"
     ],
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "!src/**/*.d.ts"
+      "core/**/*.{js,jsx,ts,tsx}",
+      "!core/**/*.d.ts"
     ],
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.js"
+      "<rootDir>/core/setupTests.js"
     ],
     "testMatch": [
-      "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+      "<rootDir>/core/**/__tests__/**/*.{js,jsx,ts,tsx}",
+      "<rootDir>/core/**/*.{spec,test}.{js,jsx,ts,tsx}"
     ],
     "testEnvironment": "jsdom",
     "transform": {

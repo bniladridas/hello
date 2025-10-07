@@ -15,5 +15,12 @@ if ! echo "$commit_msg" | grep -qE "^(feat|fix|docs|style|refactor|test|chore|pe
     exit 1
 fi
 
+# Check if message is lowercase (except for conventional commit type)
+lowercase_msg=$(echo "$commit_msg" | tr '[:upper:]' '[:lower:]')
+if [ "$commit_msg" != "$lowercase_msg" ]; then
+    echo "Error: Commit message must be lowercase."
+    exit 1
+fi
+
 echo "Commit message is valid."
 exit 0

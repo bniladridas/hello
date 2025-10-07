@@ -1,6 +1,6 @@
 # Hello
 
-A modern, real-time blog platform built with React, Firebase, and Tailwind CSS.
+A modern, real-time platform built with React, Firebase, and Tailwind CSS.
 
 ## Features
 

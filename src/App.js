@@ -12,7 +12,7 @@ const Post = ({ post, onEdit, onDelete, onPreview }) => {
   return (
     <div className="bg-white dark:bg-gray-800 p-6 mb-6">
       <div className="flex justify-between items-start mb-3">
-          <h3 className="text-lg font-medium text-gray-900 dark:text-white flex-1">{post.title}</h3>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white flex-1 leading-tight">{post.title}</h3>
         <div className="flex space-x-1 ml-4">
           <button
             onClick={() => onPreview(post)}
@@ -37,7 +37,7 @@ const Post = ({ post, onEdit, onDelete, onPreview }) => {
           </button>
         </div>
       </div>
-      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3">{post.content}</p>
+      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3 mt-2">{post.content}</p>
     </div>
   );
 };
@@ -64,23 +64,23 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
   return (
     <div className="bg-white dark:bg-gray-800 p-6">
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+        <div className="mb-6">
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Post title"
-            className="w-full px-0 py-2 bg-transparent border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-600 text-gray-900 dark:text-white text-lg font-medium"
+            className="w-full px-0 py-3 bg-transparent border-0 border-b-2 border-gray-200 dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-gray-400 dark:focus:border-gray-400 text-gray-900 dark:text-white text-xl font-semibold placeholder-gray-400 dark:placeholder-gray-500"
             required
             aria-label="Post Title"
           />
         </div>
-        <div className="mb-4">
+        <div className="mb-6">
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            placeholder="Write your post..."
-            className="w-full min-h-[120px] px-0 py-2 bg-transparent border-0 focus:outline-none focus:ring-0 text-gray-700 dark:text-gray-300 text-sm resize-none"
+            placeholder="Write your thoughts..."
+            className="w-full min-h-[150px] px-0 py-3 bg-transparent border-0 focus:outline-none focus:ring-0 text-gray-700 dark:text-gray-300 text-base leading-relaxed resize-none placeholder-gray-400 dark:placeholder-gray-500"
             required
             aria-label="Post Content"
           />

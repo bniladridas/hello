@@ -2,7 +2,7 @@
 
 [![Docker CI](https://github.com/bniladridas/hello/actions/workflows/docker-ci.yml/badge.svg)](https://github.com/bniladridas/hello/actions/workflows/docker-ci.yml)
 
-A modern, real-time platform built with React, Firebase, and Tailwind CSS.
+Real-time blog platform built with React, Firebase, and Tailwind CSS.
 
 ## Features
 

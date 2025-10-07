@@ -1,6 +1,6 @@
 import React from 'react'
-import PostForm from './PostForm'
-import BlogList from './BlogList'
+import PostForm from '../PostForm/PostForm'
+import BlogList from '../BlogList/BlogList'
 
 const BlogPage = ({ posts, currentPost, onSave, onCancel, onEdit, onDelete, onPreview }) => (
   <div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>

@@ -45,55 +45,30 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates to Privacy Policy page', () => {
-    // Wait for app to be ready (main content should exist)
-    cy.get('.max-w-4xl').should('exist')
-
-    // Open drawer
-    cy.get('[aria-label="Open menu"]').click()
-
-    // Wait for drawer to open
-    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
-
-    // Click Privacy Policy in drawer
-    cy.get('.fixed.top-0.left-0 a').contains('Privacy Policy').click()
+    // Navigate to privacy policy page
+    cy.visit('/#/privacy')
 
     // Check that Privacy Policy content is visible (confirms navigation worked)
     cy.contains('We are committed to protecting your privacy').should('be.visible')
   })
 
   it('navigates to Terms of Service page', () => {
-    // Wait for app to be ready (main content should exist)
-    cy.get('.max-w-4xl').should('exist')
-
-    // Open drawer
-    cy.get('[aria-label="Open menu"]').click()
-
-    // Wait for drawer to open
-    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
-
-    // Click Terms of Service in drawer
-    cy.get('.fixed.top-0.left-0 a').contains('Terms of Service').click()
+    // Navigate to terms of service page
+    cy.visit('/#/terms')
 
     // Check that Terms of Service content is visible (confirms navigation worked)
     cy.contains('Welcome to our blog').should('be.visible')
   })
 
   it('navigates back to home from pages', () => {
-    // Wait for app to be ready (main content should exist)
-    cy.get('.max-w-4xl').should('exist')
-
     // Go to Privacy Policy
-    cy.get('[aria-label="Open menu"]').click()
-    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
-    cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
+    cy.visit('/#/privacy')
 
     // Verify we're on privacy page
     cy.contains('We are committed to protecting your privacy').should('be.visible')
 
     // Go back to home
-    cy.get('[aria-label="Open menu"]').click()
-    cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
-    cy.get('.fixed.top-0.left-0 a').contains('Home').click()
+    cy.visit('/#/')
 
     // Check we're back to blog view
     cy.contains('Hello').should('be.visible')

@@ -45,7 +45,7 @@ describe('Hello Blog App', () => {
   })
 
   it('navigates to Privacy Policy page', () => {
-    // Wait for any loading to complete
+    // Wait for app to be ready (no loading state)
     cy.get('body').should('not.contain', 'Loading posts...')
 
     // Open drawer
@@ -57,12 +57,15 @@ describe('Hello Blog App', () => {
     // Click Privacy Policy in drawer
     cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
 
-    // Wait for navigation and check content
-    cy.contains('We are committed to protecting your privacy').should('be.visible')
+    // Check that we're no longer on the blog view (post form should not be visible)
+    cy.get('input[placeholder="Post title"]').should('not.exist')
+
+    // Check that Privacy Policy title is visible
+    cy.get('h1').contains('Privacy Policy').should('be.visible')
   })
 
   it('navigates to Terms of Service page', () => {
-    // Wait for any loading to complete
+    // Wait for app to be ready (no loading state)
     cy.get('body').should('not.contain', 'Loading posts...')
 
     // Open drawer
@@ -74,12 +77,15 @@ describe('Hello Blog App', () => {
     // Click Terms of Service in drawer
     cy.get('.fixed.top-0.left-0').contains('Terms of Service').click()
 
-    // Wait for navigation and check content
-    cy.contains('Welcome to our blog').should('be.visible')
+    // Check that we're no longer on the blog view (post form should not be visible)
+    cy.get('input[placeholder="Post title"]').should('not.exist')
+
+    // Check that Terms of Service title is visible
+    cy.get('h1').contains('Terms of Service').should('be.visible')
   })
 
   it('navigates back to home from pages', () => {
-    // Wait for any loading to complete
+    // Wait for app to be ready (no loading state)
     cy.get('body').should('not.contain', 'Loading posts...')
 
     // Go to Privacy Policy
@@ -87,8 +93,9 @@ describe('Hello Blog App', () => {
     cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
     cy.get('.fixed.top-0.left-0').contains('Privacy Policy').click()
 
-    // Verify we're on privacy page
-    cy.contains('We are committed to protecting your privacy').should('be.visible')
+    // Verify we're on privacy page (post form not visible, privacy title visible)
+    cy.get('input[placeholder="Post title"]').should('not.exist')
+    cy.get('h1').contains('Privacy Policy').should('be.visible')
 
     // Go back to home
     cy.get('[aria-label="Open menu"]').click()

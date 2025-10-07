@@ -10,39 +10,39 @@ import PropTypes from 'prop-types';
 // Post Component
 const Post = ({ post, onEdit, onDelete, onPreview }) => {
   return (
-    <div className="post bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border-l-4 border-blue-500 mb-6">
-      <div className="flex justify-between items-start mb-4">
-        <div>
-          <h3 className="text-xl font-semibold text-gray-800 dark:text-white">{post.title}</h3>
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700 mb-6 hover:border-gray-300 dark:hover:border-gray-600 transition-colors">
+      <div className="flex justify-between items-start mb-3">
+        <div className="flex-1 min-w-0">
+          <h3 className="text-lg font-medium text-gray-900 dark:text-white truncate">{post.title}</h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
             {new Date(post.createdAt?.toDate?.() || new Date()).toLocaleDateString()}
           </p>
         </div>
-        <div className="flex space-x-2">
-          <button 
+        <div className="flex space-x-1 ml-4">
+          <button
             onClick={() => onPreview(post)}
-            className="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition"
+            className="p-2 text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
             aria-label={`Preview ${post.title}`}
           >
-            <Eye size={20} />
+            <Eye size={18} />
           </button>
-          <button 
+          <button
             onClick={() => onEdit(post.id)}
-            className="text-green-500 hover:text-green-700 dark:text-green-400 dark:hover:text-green-300 transition"
+            className="p-2 text-gray-400 hover:text-green-600 dark:hover:text-green-400 transition-colors rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
             aria-label={`Edit ${post.title}`}
           >
-            <Pencil size={20} />
+            <Pencil size={18} />
           </button>
-          <button 
+          <button
             onClick={() => onDelete(post.id)}
-            className="text-red-500 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition"
+            className="p-2 text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors rounded-md hover:bg-gray-50 dark:hover:bg-gray-700"
             aria-label={`Delete ${post.title}`}
           >
-            <Trash size={20} />
+            <Trash size={18} />
           </button>
         </div>
       </div>
-      <p className="text-gray-600 dark:text-gray-300 line-clamp-3">{post.content}</p>
+      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed line-clamp-3">{post.content}</p>
     </div>
   );
 };
@@ -67,43 +67,53 @@ const PostForm = ({ currentPost, onSave, onCancel }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-sm mb-6">
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Post Title"
-        className="w-full text-2xl font-light mb-4 border-b pb-2 focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-        required
-        aria-label="Post Title"
-      />
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Post Content"
-        className="w-full min-h-[200px] resize-none text-lg font-light focus:outline-none focus:border-blue-500 dark:bg-gray-800 dark:text-white"
-        required
-        aria-label="Post Content"
-      />
-      <div className="flex justify-end mt-4 space-x-2">
-        <button 
-          type="submit" 
-          className="flex items-center bg-black dark:bg-white text-white dark:text-black px-4 py-2 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100"
-          aria-label="Save Post"
-        >
-          <Save className="mr-2" size={20} />
-          Save
-        </button>
-        <button 
-          type="button" 
-          onClick={onCancel} 
-          className="flex items-center bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600"
-          aria-label="Cancel"
-        >
-          Cancel
-        </button>
-      </div>
-    </form>
+    <div className="bg-white dark:bg-gray-800 p-6 rounded-lg border border-gray-200 dark:border-gray-700">
+      <h3 className="text-lg font-medium mb-4 text-gray-900 dark:text-white">
+        {currentPost ? 'Edit Post' : 'New Post'}
+      </h3>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-4">
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Post title"
+            className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-sm"
+            required
+            aria-label="Post Title"
+          />
+        </div>
+        <div className="mb-4">
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            placeholder="Write your post content here..."
+            className="w-full min-h-[120px] px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-sm resize-none"
+            required
+            aria-label="Post Content"
+          />
+        </div>
+        <div className="flex justify-end space-x-3">
+          {currentPost && (
+            <button
+              type="button"
+              onClick={onCancel}
+              className="px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+              aria-label="Cancel"
+            >
+              Cancel
+            </button>
+          )}
+          <button
+            type="submit"
+            className="px-4 py-2 bg-blue-600 text-white text-sm rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors"
+            aria-label="Save Post"
+          >
+            {currentPost ? 'Update' : 'Publish'}
+          </button>
+        </div>
+      </form>
+    </div>
   );
 };
 
@@ -128,23 +138,32 @@ const PostPreviewModal = ({ post, onClose }) => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') onClose();
     };
-    
+
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-3xl relative max-h-[90vh] overflow-y-auto m-4">
-        <button 
-          onClick={onClose} 
-          className="absolute top-4 right-4 text-gray-600 hover:text-black dark:text-gray-400 dark:hover:text-white"
-          aria-label="Close Preview"
-        >
-          <X size={24} />
-        </button>
-        <h2 className="text-2xl font-light mb-4 dark:text-white">{post.title}</h2>
-        <p className="text-gray-700 dark:text-gray-300">{post.content}</p>
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div className="bg-white dark:bg-gray-800 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden">
+        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+          <div className="flex justify-between items-start">
+            <h2 className="text-xl font-medium text-gray-900 dark:text-white pr-4">{post.title}</h2>
+            <button
+              onClick={onClose}
+              className="p-2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-md hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              aria-label="Close Preview"
+            >
+              <X size={20} />
+            </button>
+          </div>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+            {new Date(post.createdAt?.toDate?.() || new Date()).toLocaleDateString()}
+          </p>
+        </div>
+        <div className="p-6 overflow-y-auto max-h-[60vh]">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">{post.content}</p>
+        </div>
       </div>
     </div>
   );
@@ -264,46 +283,44 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200">
-      <div className="max-w-5xl mx-auto px-4 md:px-6 py-8 font-sans">
-        <header className="mb-10 border-b border-gray-200 dark:border-gray-700 pb-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
+      <div className="max-w-4xl mx-auto px-4 md:px-6 py-8">
+        <header className="mb-12 pb-6">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-4">
-              <Globe className="text-blue-500" size={36} />
-               <h1 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
-                 Hello
-               </h1>
+            <div className="flex items-center space-x-3">
+              <Globe className="text-blue-600 dark:text-blue-400" size={32} />
+              <h1 className="text-2xl font-semibold text-gray-900 dark:text-white">
+                Hello
+              </h1>
             </div>
-            <div className="flex items-center space-x-4">
-              <ToggleSwitch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
-            </div>
+            <ToggleSwitch isDarkMode={isDarkMode} onToggle={toggleDarkMode} />
           </div>
 
 
         </header>
 
         {error && (
-          <div className="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-100 rounded-lg">
+          <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-300 rounded-md border border-red-200 dark:border-red-800">
             {error}
           </div>
         )}
 
         {loading ? (
-          <div className="flex items-center justify-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900 dark:border-white"></div>
+          <div className="flex items-center justify-center py-16">
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-gray-300 border-t-blue-600 dark:border-gray-600 dark:border-t-blue-400"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="md:sticky md:top-4 self-start">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-1">
               <PostForm
                 currentPost={currentPost}
                 onSave={handleSavePost}
                 onCancel={handleCancel}
               />
             </div>
-            <div>
-              <h2 className="text-xl font-light mb-4 flex items-center text-gray-800 dark:text-white">
-                <FileText className="mr-2" /> Posts
+            <div className="lg:col-span-2">
+              <h2 className="text-lg font-medium mb-6 text-gray-900 dark:text-white">
+                Posts
               </h2>
               <BlogList
                 posts={posts}

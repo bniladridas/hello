@@ -81,7 +81,10 @@ describe('Hello Blog App', () => {
     // Verify we're on privacy page
     cy.contains('We are committed to protecting your privacy').should('be.visible')
 
-    // Go back to home
+    // Close the modal
+    cy.get('[aria-label="Close"]').click()
+
+    // Go back to home via drawer
     cy.get('[aria-label="Open menu"]').click()
     cy.get('.fixed.top-0.left-0').should('not.have.class', '-translate-x-full')
     cy.get('.fixed.top-0.left-0').contains('Home').click()

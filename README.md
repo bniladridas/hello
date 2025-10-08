@@ -7,12 +7,43 @@ Real-time blog platform built with React, Firebase, and Tailwind CSS.
 ## Features
 
 - Real-time post updates with Firebase Firestore
+  <details>
+  <summary>Real-time Details</summary>
+  Posts are fetched and updated in real-time using Firebase Firestore's onSnapshot listener, ensuring users see changes instantly without refreshing.
+  </details>
 - Responsive design with Tailwind CSS
+  <details>
+  <summary>Responsive Details</summary>
+  The app uses Tailwind CSS utility classes for responsive layouts that adapt to different screen sizes, from mobile to desktop.
+  </details>
 - Dark mode toggle
+  <details>
+  <summary>Dark Mode Details</summary>
+  Users can toggle between light and dark themes, with preferences applied via Tailwind's dark mode classes and local state management.
+  </details>
 - Navigation drawer for easy access to different sections
+  <details>
+  <summary>Drawer Details</summary>
+  The navigation drawer includes links to:
+  - Home: Returns to the main blog view
+  - Privacy Policy: Displays the app's privacy policy in a modal
+  - Terms of Service: Shows the terms of service in a modal
+  </details>
 - Single-page application
+  <details>
+  <summary>SPA Details</summary>
+  Built as a single-page application with React Router, allowing seamless navigation without full page reloads.
+  </details>
 - Post creation, editing, deletion, and preview
+  <details>
+  <summary>Post Management Details</summary>
+  Full CRUD operations for blog posts: create new posts, edit existing ones, delete posts with confirmation, and preview posts in a modal before publishing.
+  </details>
 - Clean, minimal UI
+  <details>
+  <summary>UI Details</summary>
+  Minimalist design with clean typography, ample whitespace, and intuitive icons from Lucide React, focusing on content readability.
+  </details>
 
 ## Code Examples
 
@@ -65,16 +96,16 @@ const BlogList = ({ posts, onEdit, onDelete }) => {
 
 ## Current State & Maintenance
 
-The project now includes comprehensive unit tests (44.36% coverage), E2E tests with Cypress, and CI/CD pipelines for automated testing and building.
+The project now includes comprehensive unit tests (43.83% statement coverage, 26.08% branch coverage), E2E tests with Cypress, and CI/CD pipelines for automated testing and building.
 
 ### Code Quality
 
 As a code reviewer, I've assessed the codebase and confirmed the following:
 
 - **Linting**: Passes ESLint with Standard JS rules (no errors)
-- **Testing**: 4 unit test suites, 12 tests passing (44.36% statement coverage, 20.83% branch coverage)
+- **Testing**: 4 unit test suites, 12 tests passing (43.83% statement coverage, 26.08% branch coverage)
 - **E2E Testing**: Cypress tests for UI features (dark mode, navigation, pages)
-- **Build**: Successful production build (133.67 kB JS, 4.09 kB CSS gzipped)
+- **Build**: Successful production build (133.05 kB JS, 4.09 kB CSS gzipped)
 - **CI/CD**: Docker-based CI pipeline with automated testing and building
 - **Security**: No critical vulnerabilities in production code
 - **Code Organization**: Well-structured with logical folder separation (core/, config/, infra/, etc.)
@@ -87,7 +118,7 @@ As a code reviewer, I've assessed the codebase and confirmed the following:
 - Implement more comprehensive error handling for production
 
 ### Known Issues
-- **NPM Vulnerabilities**: 8 vulnerabilities (3 moderate, 5 high) related to dependencies like nth-check, postcss, webpack-dev-server. These are in dev dependencies and don't affect production builds. Avoid `npm audit fix --force` as it downgrades react-scripts to 0.0.0, breaking the app.
+- **NPM Vulnerabilities**: 2 moderate severity vulnerabilities related to postcss and resolve-url-loader. These are in dev dependencies and don't affect production builds. Avoid `npm audit fix --force` as it may introduce breaking changes.
 - **Deprecated Dependencies**: Some Babel plugins are deprecated but functional. Update when possible.
 - **Node.js Deprecation Warnings**: fs.F_OK and webpack dev server middleware warnings are harmless but indicate outdated tooling.
 

@@ -236,7 +236,7 @@ Your app will be live at your Firebase hosting URL.
 - `npm run cypress:run`: Run Cypress E2E tests headlessly (requires app running on localhost:3000)
 - `npm run eject`: Eject from Create React App
 
-Custom scripts in `scripts/`:
+Custom scripts in `scripts_custom/`:
 - `commit-msg`: Git hook to enforce commit message standards (conventional commits, <=60 chars, lowercase)
 - `rewrite_msg.sh`: Script to rewrite commit messages for history cleanup
 - `preflight.sh`: Script for preflight checks (also used by `npm run all`)

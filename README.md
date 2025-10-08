@@ -8,8 +8,8 @@ Real-time blog platform built with React, Firebase, and Tailwind CSS.
 
 - Real-time post updates with Firebase Firestore
   <details>
-  <summary>Real-time Details</summary>
-  Posts are fetched and updated in real-time using Firebase Firestore's onSnapshot listener, ensuring users see changes instantly without refreshing.
+    <summary>Real-time Details</summary>
+    Posts are fetched and updated in real-time using Firebase Firestore's onSnapshot listener, ensuring users see changes instantly without refreshing.
   </details>
 - Responsive design with Tailwind CSS
   <details>

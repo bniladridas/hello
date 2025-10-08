@@ -25,9 +25,9 @@ Real-time blog platform built with React, Firebase, and Tailwind CSS.
   <details>
   <summary>Drawer Details</summary>
   The navigation drawer includes links to:
-  - Home: Returns to the main blog view
-  - Privacy Policy: Displays the app's privacy policy in a modal
-  - Terms of Service: Shows the terms of service in a modal
+    - Home: Returns to the main blog view
+    - Privacy Policy: Displays the app's privacy policy in a modal
+    - Terms of Service: Shows the terms of service in a modal
   </details>
 - Single-page application
   <details>
